@@ -19,7 +19,7 @@ public class EngineGioco {
         boolean continua = true;
 
         while(continua){
-            System.out.println("\nTi trovi nella stanza " + giocatore.getStanzaAttuale().getNome());
+            System.out.println("\n-" + giocatore.getStanzaAttuale().getNome()); // quesot messaggio apparirà ogni volta che ci muoveremo di stanza
             giocatore.getStanzaAttuale().stampaDescrizioneStanza();
             giocatore.getStanzaAttuale().stampaUscite();
             System.out.println("\nCosa vuoi fare? ");
@@ -68,6 +68,10 @@ public class EngineGioco {
         if(oggetto != null){ // se l'oggetto esiste
             giocatore.getInventario().aggiungiOggetto(oggetto); // lo aggiungiamo all'inventario
             giocatore.getStanzaAttuale().getOggettiPresenti().remove(oggetto); // e lo rimuoviamo dalla stanza
+
+            // test per rimovere l'oggetto a terra dalla descrizione della stanza
+            giocatore.getStanzaAttuale().setDescrizione(rimuoviOggettoDaTerra(giocatore.getStanzaAttuale().getDescrizione(), oggetto.getNome())); // da testare
+
             System.out.println("Hai raccolto: " + oggetto.getNome());
         }
         else{
@@ -84,6 +88,32 @@ public class EngineGioco {
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
         }
+    }
+    private String rimuoviOggettoDaTerra(String descrizioneStanza, String nomeOggetto){
+        StringBuilder risultato = new StringBuilder();
+
+        // regex per dividere la descrizioni in blocchi in base ai punti
+        String[] blocchi = descrizioneStanza.split("(?<=\\.)\\s*");
+
+        for (String blocco : blocchi) {
+            // trovo gli indici di inizio e di fine, basandomi sui punti
+            int inizio = blocco.indexOf('.');
+            int fine = blocco.indexOf('.', inizio + 1);
+
+            if (inizio != -1 && fine != -1) {
+                String contenuto = blocco.substring(inizio + 1, fine).trim();
+
+                // se NON contiene la parola da rimuovere lo aggiungiamo al risultato
+                if (!contenuto.toLowerCase().contains(nomeOggetto.toLowerCase())) {
+                    risultato.append(blocco.substring(0, fine + 1));
+                }
+            }
+        }
+
+        return risultato.toString().trim();
+
+
+
     }
 
 }
