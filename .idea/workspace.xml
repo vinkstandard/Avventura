@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="287d261e-7269-4a7b-9466-93e7e7451b5b" name="Changes" comment="Workspace aggiornato">
+    <list default="true" id="287d261e-7269-4a7b-9466-93e7e7451b5b" name="Changes" comment="Metodo main adibito a tester">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/EngineGioco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/EngineGioco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Stanza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Stanza.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Inventario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Inventario.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +105,39 @@
       <option name="project" value="LOCAL" />
       <updated>1747215408541</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Aggiungo secondo costruttore">
+      <option name="closed" value="true" />
+      <created>1747219896708</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1747219896708</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Aggiunto metodo &quot;rimuoviOggettoTerra()&quot;">
+      <option name="closed" value="true" />
+      <created>1747219938178</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747219938178</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Metodo main adibito a tester">
+      <option name="closed" value="true" />
+      <created>1747219990181</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747219990181</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Metodo main adibito a tester">
+      <option name="closed" value="true" />
+      <created>1747219999015</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1747219999015</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -115,6 +147,9 @@
     <MESSAGE value="Aggiunto constructor, e metodi vari" />
     <MESSAGE value="Aggiunti metodi &quot;vai()&quot; , &quot;prendi()&quot; e &quot;guarda()&quot;" />
     <MESSAGE value="Workspace aggiornato" />
-    <option name="LAST_COMMIT_MESSAGE" value="Workspace aggiornato" />
+    <MESSAGE value="Aggiungo secondo costruttore" />
+    <MESSAGE value="Aggiunto metodo &quot;rimuoviOggettoTerra()&quot;" />
+    <MESSAGE value="Metodo main adibito a tester" />
+    <option name="LAST_COMMIT_MESSAGE" value="Metodo main adibito a tester" />
   </component>
 </project>
