@@ -25,10 +25,10 @@ public class Inventario {
     }
 
     public void visualizzaInventario(){
-        if(oggetti.isEmpty()){
-            System.out.println("Inventario vuoto");
+        if(oggetti.isEmpty() || oggetti == null){
+            System.out.println(">> Inventario vuoto");
         }else{
-            System.out.println("Inventario:");
+            System.out.println(">> Inventario:");
             for(Oggetto oggetto : oggetti){
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
