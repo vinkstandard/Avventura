@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) {
 
 
+        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere; comando "lascia [oggetto]"
+
         stampaIntroduzione();
         Mappa mappa = new Mappa();
 
