@@ -1,6 +1,9 @@
 package engine;
 import model.Giocatore;
+import model.Oggetto;
+import model.Stanza;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class EngineGioco {
@@ -43,14 +46,44 @@ public class EngineGioco {
 
         }
     }
-    private void vai(){
-
+    private void vai(String direzione){
+        Stanza stanza = giocatore.getStanzaAttuale().getUscita(direzione);
+        if(stanza != null){
+            giocatore.setStanzaAttuale(stanza); // se esiste una stanza in quella direzione, allora ci spostiamo
+        }
+        else{
+            System.out.println("Non puoi andare a " + direzione);
+        }
     }
-    private void prendi(){
 
+    private void prendi(String nomeOggetto) {
+//        se non dovesse funzionare proviamo con le stream
+//        Oggetto oggetto = giocatore.getStanzaAttuale().getOggettiPresenti().stream()
+//                .filter(i -> i.getNome().equalsIgnoreCase(nomeOggetto))
+//                .findFirst().orElse(null);
+
+        List<Oggetto> oggettiPerTerra = giocatore.getStanzaAttuale().getOggettiPresenti();
+        Oggetto oggetto = oggettiPerTerra.get(oggettiPerTerra.indexOf(nomeOggetto));
+
+        if(oggetto != null){ // se l'oggetto esiste
+            giocatore.getInventario().aggiungiOggetto(oggetto); // lo aggiungiamo all'inventario
+            giocatore.getStanzaAttuale().getOggettiPresenti().remove(oggetto); // e lo rimuoviamo dalla stanza
+            System.out.println("Hai raccolto: " + oggetto.getNome());
+        }
+        else{
+            System.out.println("Oggetto non trovato");
+        }
     }
     private void guarda(){
+        giocatore.getStanzaAttuale().stampaDescrizioneStanza();
 
+        List<Oggetto> oggetti = giocatore.getStanzaAttuale().getOggettiPresenti();
+        if(oggetti != null && !oggetti.isEmpty()){
+            System.out.println("A terra:");
+            for(Oggetto oggetto : oggetti){
+                System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
+            }
+        }
     }
 
 }
