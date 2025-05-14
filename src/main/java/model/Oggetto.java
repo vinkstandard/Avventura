@@ -8,6 +8,26 @@ public class Oggetto {
     private boolean usabile;
     private String effetto;  // cura, chiave, arma
 
+    public Oggetto(String nome, String descrizione, boolean raccoglibile, boolean usabile, String effetto) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.raccoglibile = raccoglibile;
+        this.usabile = usabile;
+        this.effetto = effetto;
+    }
+
+    public boolean isRaccoglibile() {
+        return raccoglibile;
+    }
+
+    public boolean isUsabile() {
+        return usabile;
+    }
+
+    public String getEffetto() {
+        return effetto;
+    }
+
     public String getDescrizione() {
         return descrizione;
     }
@@ -15,4 +35,5 @@ public class Oggetto {
     public String getNome() {
         return nome;
     }
+
 }
