@@ -1,5 +1,6 @@
 package model;
 import java.util.*;
+
 public class Stanza {
 
     private String nome;
@@ -26,13 +27,15 @@ public class Stanza {
             condizioniSblocco.put(direzione, oggettoPerSbloccare.toLowerCase());
         }
     }
-    public Stanza getUscita(String direzioneUscita){
-        if(usciteSbloccate.getOrDefault(direzioneUscita,true)){
+
+    public Stanza getUscita(String direzioneUscita) {
+        if (usciteSbloccate.getOrDefault(direzioneUscita, true)) {
             return uscite.get(direzioneUscita);
-        }else{
+        } else {
             return null; // se l'uscita è presente, ma ancora bloccata
         }
     }
+
     public boolean sbloccaUscita(String direzione, String nomeOggetto) {
         if (condizioniSblocco.containsKey(direzione) && condizioniSblocco.get(direzione).equalsIgnoreCase(nomeOggetto)) {
             usciteSbloccate.put(direzione, true);
@@ -40,14 +43,16 @@ public class Stanza {
         }
         return false;
     }
-    public boolean esisteUscita(String direzione){
+
+    public boolean esisteUscita(String direzione) {
         return uscite.containsKey(direzione);
     }
-    public void aggiungiOggetto(Oggetto oggetto){
+
+    public void aggiungiOggetto(Oggetto oggetto) {
         oggettiPresenti.add(oggetto);
     }
 
-    public List<Oggetto> getOggettiPresenti(){
+    public List<Oggetto> getOggettiPresenti() {
         return oggettiPresenti;
     }
 
@@ -62,13 +67,14 @@ public class Stanza {
     public String getDescrizione() {
         return descrizione;
     }
-    public void stampaDescrizioneStanza(){
+
+    public void stampaDescrizioneStanza() {
         System.out.println(descrizione);
     }
 
-    public void stampaUscite(){
+    public void stampaUscite() {
         System.out.println("Uscite disponibili:");
-        for(String direzione : uscite.keySet()){
+        for (String direzione : uscite.keySet()) {
             System.out.println("- " + direzione);
         }
     }
