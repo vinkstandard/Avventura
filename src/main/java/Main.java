@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere; comando "lascia [oggetto]"
+        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere {fatto}; comando "lascia [oggetto]"
 
         stampaIntroduzione();
         Mappa mappa = new Mappa();
@@ -36,6 +36,6 @@ public class Main {
     public static void stampaIntroduzione(){
         System.out.println("-----Benvenuto in [nomeAvventura], un'avventura fantasy testuale-----\n" +
                 "Ti risvegli in una foresta, non hai memoria di chi sei e come ci sei finito. Ti senti smarrito e sta iniziando a fare buio. " +
-                "Controllandoti le tasche, noti che hai solo una bussola in ottone, e un accendino");
+                "\nControllandoti le tasche, noti che hai una bussola in ottone e un accendino.\n");
     }
 }
