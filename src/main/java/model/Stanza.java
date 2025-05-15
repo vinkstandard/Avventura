@@ -21,7 +21,7 @@ public class Stanza {
 
     public void aggiungiUscita(String direzione, Stanza stanzaDestinazione, boolean bloccata, String oggettoPerSbloccare) {
         uscite.put(direzione, stanzaDestinazione);
-        usciteSbloccate.put(direzione, !bloccata);
+        usciteSbloccate.put(direzione, !bloccata);// invertiamo la boolean, perché se bloccata è true allora non si passa, se invece è false(che in genere indica una negatività) è sbloccata e quindi si passa.
         if (bloccata && oggettoPerSbloccare != null) {
             condizioniSblocco.put(direzione, oggettoPerSbloccare.toLowerCase());
         }
