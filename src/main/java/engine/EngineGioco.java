@@ -15,7 +15,6 @@ public class EngineGioco {
         this.giocatore = giocatore;
     }
 
-
     public void avvia() {
         Scanner scanner = new Scanner(System.in);
         boolean continua = true;
@@ -75,8 +74,8 @@ public class EngineGioco {
             } else {
                 System.out.println(">> Comando non valido");
             }
-
         }
+
     }
 
     private void vai(String direzione) {
@@ -91,6 +90,7 @@ public class EngineGioco {
             System.out.println(">> La strada verso " + direzione + " è bloccata.");
             return;
         }
+
         giocatore.setStanzaAttuale(prossimaStanza);
     }
 
@@ -118,6 +118,7 @@ public class EngineGioco {
         } else {
             System.out.println(">> Oggetto non trovato");
         }
+
     }
 
     private void guarda() {
@@ -130,6 +131,7 @@ public class EngineGioco {
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
         }
+
     }
 
     private String rimuoviOggettoDaTerra(String descrizioneStanza, String nomeOggetto) {
@@ -160,7 +162,6 @@ public class EngineGioco {
         } else {
             System.out.println(">> Non possiedi questo oggetto.");
         }
-
 
     }
 
