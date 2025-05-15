@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="287d261e-7269-4a7b-9466-93e7e7451b5b" name="Changes" comment="Metodo main adibito a tester">
+    <list default="true" id="287d261e-7269-4a7b-9466-93e7e7451b5b" name="Changes" comment="Aggiunto todo">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/engine/EngineGioco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/engine/EngineGioco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gioco/Mappa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gioco/Mappa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Inventario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Inventario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Stanza.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Stanza.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,18 +38,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="Avventura" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -137,7 +148,55 @@
       <option name="project" value="LOCAL" />
       <updated>1747219999015</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Aggiunti supporti per diversi input, aggiunta voce inventario">
+      <option name="closed" value="true" />
+      <created>1747233327614</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233327614</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Creazione mappa spostata in classe a parte">
+      <option name="closed" value="true" />
+      <created>1747233402158</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233402158</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Init classe creazione mappa">
+      <option name="closed" value="true" />
+      <created>1747233427554</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233427554</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Modificata grafica messaggi print">
+      <option name="closed" value="true" />
+      <created>1747233448290</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233448290</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Modificata grafica messaggi print">
+      <option name="closed" value="true" />
+      <created>1747233460822</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233460822</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Aggiunto todo">
+      <option name="closed" value="true" />
+      <created>1747233579521</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1747233579521</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -150,6 +209,11 @@
     <MESSAGE value="Aggiungo secondo costruttore" />
     <MESSAGE value="Aggiunto metodo &quot;rimuoviOggettoTerra()&quot;" />
     <MESSAGE value="Metodo main adibito a tester" />
-    <option name="LAST_COMMIT_MESSAGE" value="Metodo main adibito a tester" />
+    <MESSAGE value="Aggiunti supporti per diversi input, aggiunta voce inventario" />
+    <MESSAGE value="Creazione mappa spostata in classe a parte" />
+    <MESSAGE value="Init classe creazione mappa" />
+    <MESSAGE value="Modificata grafica messaggi print" />
+    <MESSAGE value="Aggiunto todo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Aggiunto todo" />
   </component>
 </project>
