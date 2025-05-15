@@ -14,8 +14,8 @@ public class Mappa {
         costruisciMappa();
     }
     private void costruisciMappa() {
+
         Stanza sterpaglie = new Stanza("Sterpaglie", "Sei in una fitta foresta che si estende in tutte le direzioni. Vedi delle luci verso nord.");
-        stanzaIniziale = sterpaglie;
 
         Stanza cancelloArrugginito = new Stanza("Cancello arrugginito", "Sei davanti a un cancello arrugginito, " +
                 "oltre in cancello riesci a scrutare una strada sterrata che conduce ad un grande edificio. Ai tuoi piedi c'è una spranga di metallo.");
@@ -46,7 +46,7 @@ public class Mappa {
         Oggetto lanterna = new Oggetto("Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null);
         capannoAttrezzi.aggiungiOggetto(lanterna);
 
-
+        stanzaIniziale = sterpaglie;
     }
 
     public Stanza getStanzaIniziale() {
