@@ -36,3 +36,10 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### per far smettere di tracciare workspace.xml ###
+
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+out/
