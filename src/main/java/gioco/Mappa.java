@@ -27,22 +27,26 @@ public class Mappa {
                 " La porta del capanno è a terra fradicia. Riesci a scrutare una vecchia lanterna a olio sul bancone.");
 
 
-        sterpaglie.aggiungiUscita("nord", cancelloArrugginito);
+//         sterpaglie
+        sterpaglie.aggiungiUscita("nord", cancelloArrugginito,false,null);
 
-        cancelloArrugginito.aggiungiUscita("nord" , stradaSterrata);
+//        cancello arrugginito
+        cancelloArrugginito.aggiungiUscita("sud" , sterpaglie, false, null);
+        cancelloArrugginito.aggiungiUscita("nord" , stradaSterrata, true, "spranga");
         Oggetto spranga = new Oggetto("Spranga arrugginita", "Una Spranga di metallo arrugginita", true, true, null);
         cancelloArrugginito.aggiungiOggetto(spranga);
 
-        stradaSterrata.aggiungiUscita("est" , capannoAttrezzi);
-        stradaSterrata.aggiungiUscita("sud", cancelloArrugginito); // per tornare indietro
-//        stradaSterrata.aggiungiUscita("nord" , ingressoVilla);
+//        strada sterrata
+        stradaSterrata.aggiungiUscita("est" , capannoAttrezzi,false,null);
+        stradaSterrata.aggiungiUscita("sud", cancelloArrugginito,false,null); // per tornare indietro
+        // da fare == stradaSterrata.aggiungiUscita("nord" , ingressoVilla);
 
-        capannoAttrezzi.aggiungiUscita("ovest" , stradaSterrata);
+//        capanno attrezzi
+        capannoAttrezzi.aggiungiUscita("ovest" , stradaSterrata,false,null);
         Oggetto lanterna = new Oggetto("Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null);
         capannoAttrezzi.aggiungiOggetto(lanterna);
 
-//        Oggetto piedeDiPorco = new Oggetto("Piede di porco", "Un piede di porco, un po' vecchio ma sembra resistente.", true, true, null);
-//        capannoAttrezzi.aggiungiOggetto(piedeDiPorco);
+
     }
 
     public Stanza getStanzaIniziale() {
