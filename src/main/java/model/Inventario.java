@@ -1,42 +1,46 @@
 package model;
 
 import java.util.*;
+
 public class Inventario {
 
     private List<Oggetto> oggetti;
 
-    public Inventario(){
+    public Inventario() {
         this.oggetti = new ArrayList<>();
     }
 
-    public void aggiungiOggetto(Oggetto oggetto){
+    public void aggiungiOggetto(Oggetto oggetto) {
         oggetti.add(oggetto);
     }
-    public boolean rimuoviOggetto(String nomeOggetto){
+
+    public boolean rimuoviOggetto(String nomeOggetto) {
         return oggetti.removeIf(i -> i.getNome().equalsIgnoreCase(nomeOggetto));
     }
 
-    public Oggetto getOggetto(String nomeOggetto){
+    public Oggetto getOggetto(String nomeOggetto) {
         return oggetti.stream()
                 .filter(i -> i.getNome().equalsIgnoreCase(nomeOggetto)).findFirst().orElse(null);
     }
-    public List<Oggetto> getOggetti(){
+
+    public List<Oggetto> getOggetti() {
         return oggetti;
     }
 
-    public void visualizzaInventario(){
-        if(oggetti.isEmpty() || oggetti == null){
+    public void visualizzaInventario() {
+        if (oggetti.isEmpty() || oggetti == null) {
             System.out.println(">> Inventario vuoto");
-        }else{
+        } else {
             System.out.println(">> Inventario:");
-            for(Oggetto oggetto : oggetti){
+            for (Oggetto oggetto : oggetti) {
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
         }
     }
-    public boolean possiedeOggetto(String nomeOggetto){
-        for(Oggetto oggetto : oggetti){
-            if(oggetto.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())){
+
+    public boolean possiedeOggetto(String nomeOggetto) {
+        for (Oggetto oggetto : oggetti) {
+            if (oggetto.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())) {
                 return true;
             }
         }
