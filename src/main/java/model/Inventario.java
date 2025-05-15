@@ -34,5 +34,13 @@ public class Inventario {
             }
         }
     }
+    public boolean possiedeOggetto(String nomeOggetto){
+        for(Oggetto oggetto : oggetti){
+            if(oggetto.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
