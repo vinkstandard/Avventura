@@ -9,7 +9,15 @@ public class Main {
     public static void main(String[] args) {
 
 
-        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere {fatto}; comando "lascia [oggetto]"
+        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere {fatto};
+        //  comando "lascia [oggetto]"
+        //  parametro nemiciStanza {fatto}
+        //  eventiAutomatici
+        //  condizioniAccesso {fatto}
+        //  usare armi, e quindi le loro statistiche durante il combattimento
+        //  limitare l'inventario del giocatore?
+
+
 
         stampaIntroduzione();
         Mappa mappa = new Mappa();
