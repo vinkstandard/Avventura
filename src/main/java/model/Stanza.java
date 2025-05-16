@@ -99,6 +99,4 @@ public class Stanza {
         return condizioniSblocco;
     }
 
-
-    // TODO: parametro nemiciStanza{quasi fatto}, eventiAutomatici, condizioniAccesso{fatto}
 }
