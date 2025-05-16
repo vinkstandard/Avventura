@@ -4,15 +4,26 @@ public class Giocatore {
     private String nome;
     private Stanza stanzaAttuale;
     private Inventario inventario;
+    private int vita;
+    private int dannoBase = 5; // a mani nude
 
     public Giocatore(String nome, Stanza stanzaAttuale, Inventario inventario) {
         this.nome = nome;
         this.stanzaAttuale = stanzaAttuale;
         this.inventario = inventario;
+        this.vita = 100; // hp max
     }
 
-    public String getNome() {
-        return nome;
+    public void subisciDanno(int danno){
+        this.vita -= danno;
+        if(this.vita < 0) this.vita = 0;
+    }
+    public int getDannoBase(){
+        return dannoBase;
+    }
+
+    public int getVita() {
+        return vita;
     }
 
     public Stanza getStanzaAttuale() {
@@ -25,5 +36,8 @@ public class Giocatore {
 
     public Inventario getInventario() {
         return inventario;
+    }
+    public String getNome() {
+        return nome;
     }
 }
