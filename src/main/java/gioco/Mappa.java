@@ -43,7 +43,9 @@ public class Mappa {
 
         Stanza salaDaPranzoVilla = new Stanza("Sala da pranzo", "Una sala da pranzo in stile coloniale. La tavola è apparecchiata, e i piatti sono pieni vermi." +
                 " Emana un pessimo odore.");
-//         sterpaglie
+
+
+//         sterpaglie, questa sarà la stanza iniziale, la cambierò di tanto in tanto per debuggare, facendo spawnare il player dove voglio
         sterpaglie.aggiungiUscita("nord", cancelloArrugginito,false,null);
 
 //        cancello arrugginito
@@ -89,7 +91,7 @@ public class Mappa {
         atrioVilla.setNemico(goblin);
         atrioVilla.aggiungiUscita("ovest", cucinaVilla, false, null);
 
-        stanzaIniziale = sterpaglie;
+        stanzaIniziale = cucinaVilla;
     }
 
     public Stanza getStanzaIniziale() {
