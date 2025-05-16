@@ -28,7 +28,7 @@ public class Inventario {
     }
 
     public void visualizzaInventario() {
-        if (oggetti.isEmpty() || oggetti == null) {
+        if (oggetti.isEmpty()) {
             System.out.println(">> Inventario vuoto");
         } else {
             System.out.println(">> Inventario:");
