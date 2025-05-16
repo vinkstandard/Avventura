@@ -7,6 +7,7 @@ import model.Stanza;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EngineGioco {
 
@@ -76,7 +77,7 @@ public class EngineGioco {
                 combatti();
             }
             else {
-                System.out.println(">> Comando non valido");
+                gestisciInputErrati(comando);
             }
         }
 
@@ -170,6 +171,7 @@ public class EngineGioco {
     }
 
     private void combatti(){
+        Scanner scanner = new Scanner(System.in);
         Nemico nemico = giocatore.getStanzaAttuale().getNemico();
 
         if(nemico == null){
@@ -178,25 +180,60 @@ public class EngineGioco {
         }
 
         System.out.println(">> Hai ingaggiato un combattimento con " + nemico.getNome() + "!");
-
         while(nemico.isVivo()){
 
-            // il giocatore colpisce
-            nemico.subisciDanno(giocatore.getDannoBase());
-            System.out.println(">> Hai colpito " + nemico.getNome() + " per " + giocatore.getDannoBase() + " danni.");
+            System.out.println(">> Mosse disponibili: \n-Attacca\n-Scappa");
+            String mossa;
+            do{
+                mossa = scanner.nextLine().toLowerCase();
+                if (!mossa.equals("attacca") && !mossa.equals("scappa")) {
+                    System.out.println(">> Comando non valido.");
+                }
+            }while (!mossa.equals("attacca") && !mossa.equals("scappa"));
 
+            if (mossa.equals("attacca")) {
+                // il giocatore colpisce, calcolando anche la possibilità di un colpo critico
+                int dannoCritico = ThreadLocalRandom.current().nextInt(0, giocatore.getDannoBase()); // da 1 fino al danno attuale del giocatore,
+
+                if (dannoCritico >= giocatore.getDannoBase() / 2) { // se il numero random genera un numero decente, cioè un numero che sia maggiore o uguale la danno base, allora lo aggiungi al danno
+                    nemico.subisciDanno(giocatore.getDannoBase() + dannoCritico);
+                    System.out.println(">> Hai colpito " + nemico.getNome() + " per " + (giocatore.getDannoBase() + dannoCritico) + " danni, colpo critico!");
+                } else {
+                    nemico.subisciDanno(giocatore.getDannoBase());
+                    System.out.println(">> Hai colpito " + nemico.getNome() + " per " + giocatore.getDannoBase() + " danni.");
+                }
+            }
             if (!nemico.isVivo()) {
-                System.out.println(">>Hai sconfitto " + nemico.getNome() + "!");
+                System.out.println(">> Hai sconfitto " + nemico.getNome() + "!");
                 giocatore.getStanzaAttuale().setNemico(null); // rimuoviamo il nemico dalla stanza
                 break;
             }
+            if(mossa.equals("scappa")){
+                int numeroRandom = ThreadLocalRandom.current().nextInt(1,4);
+                int numeroRandom2 = ThreadLocalRandom.current().nextInt(1,4);
+                if(numeroRandom2 == numeroRandom){
+                    System.out.println(">> Sei riuscito a scappare dal combattimento.");
+                }else{
+                    System.out.println(">> Tenti di scappare, ma fallisci, il nemico colpisce ti colpisce due volte.");
+                    giocatore.subisciDanno(nemico.attacca());
+                    System.out.println(">> " + nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+                }
+            }
 
             // il nemico colpisce
-            giocatore.subisciDanno(nemico.attacca());
-            System.out.println(nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+            int dannoCritico = ThreadLocalRandom.current().nextInt(0, nemico.attacca());
+            if(dannoCritico >= nemico.attacca() / 2){
+                giocatore.subisciDanno(nemico.attacca() + dannoCritico);
+                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + (nemico.attacca() + dannoCritico) + " danni, colpo critico!");
+
+            }else{
+                giocatore.subisciDanno(nemico.attacca());
+                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+            }
+
 
             if(giocatore.getVita() <= 0){
-                System.out.println("Sei stato sconfitto.\nGame Over.");
+                System.out.println(">> Sei stato sconfitto.\nGame Over.");
                 System.exit(11);
             }
         }
@@ -212,6 +249,21 @@ public class EngineGioco {
             boolean sbloccata = stanzaAttuale.getUsciteSbloccate().getOrDefault(direzione, true);
             String stato = sbloccata ? "Sbloccata" : "Bloccata";
             System.out.println(direzione + " --> " + collegata.getNome() + " [" + stato + "]");
+        }
+    }
+    public void gestisciInputErrati(String comando){
+
+        // qui scriverò tutti i messaggi di errore personalizzati
+
+
+        if(comando.equals("attacca") || comando.startsWith("attacca ")){ // da modificare poi con un check per vedere se ci sono effettivamente nemici da attaccare, per ora il comando per attaccare è solo "combatti"
+            Nemico nemico = giocatore.getStanzaAttuale().getNemico();
+            if(nemico == null){
+                System.out.println(">> Non c'è nulla da attaccare qui.");
+            }
+        }
+        else{
+            System.out.println(">> Comando non valido.");
         }
     }
 
