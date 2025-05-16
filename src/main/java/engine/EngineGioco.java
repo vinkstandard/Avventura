@@ -1,5 +1,6 @@
 package engine;
 import model.Giocatore;
+import model.Nemico;
 import model.Oggetto;
 import model.Stanza;
 
@@ -70,8 +71,11 @@ public class EngineGioco {
 
             } else if (comando.equals("debug")) {
                 debug();
-
-            } else {
+            }
+            else if (comando.equals("combatti") || comando.startsWith("combatti ")) {
+                combatti();
+            }
+            else {
                 System.out.println(">> Comando non valido");
             }
         }
@@ -163,6 +167,39 @@ public class EngineGioco {
             System.out.println(">> Non possiedi questo oggetto.");
         }
 
+    }
+
+    private void combatti(){
+        Nemico nemico = giocatore.getStanzaAttuale().getNemico();
+
+        if(nemico == null){
+            System.out.println(">> Non c'è nessuno da combattere qui.");
+            return;
+        }
+
+        System.out.println(">> Hai ingaggiato un combattimento con " + nemico.getNome() + "!");
+
+        while(nemico.isVivo()){
+
+            // il giocatore colpisce
+            nemico.subisciDanno(giocatore.getDannoBase());
+            System.out.println(">> Hai colpito " + nemico.getNome() + " per " + giocatore.getDannoBase() + " danni.");
+
+            if (!nemico.isVivo()) {
+                System.out.println(">>Hai sconfitto " + nemico.getNome() + "!");
+                giocatore.getStanzaAttuale().setNemico(null); // rimuoviamo il nemico dalla stanza
+                break;
+            }
+
+            // il nemico colpisce
+            giocatore.subisciDanno(nemico.attacca());
+            System.out.println(nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+
+            if(giocatore.getVita() <= 0){
+                System.out.println("Sei stato sconfitto.\nGame Over.");
+                System.exit(11);
+            }
+        }
     }
 
     private void debug() {
