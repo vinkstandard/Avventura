@@ -9,6 +9,8 @@ public class Stanza {
     private Map<String, Boolean> usciteSbloccate; // direzione + sbloccata o no
     private Map<String, String> condizioniSblocco;
     private List<Oggetto> oggettiPresenti;
+    private Nemico nemico;
+
 
     // costruttore semplificato (per semplificare la creazione di stanze nel main)
     public Stanza(String nome, String descrizione) {
@@ -44,6 +46,12 @@ public class Stanza {
         return false;
     }
 
+    public void setNemico(Nemico nemico){
+        this.nemico = nemico;
+    }
+    public Nemico getNemico(){
+        return nemico;
+    }
     public boolean esisteUscita(String direzione) {
         return uscite.containsKey(direzione);
     }
@@ -73,7 +81,7 @@ public class Stanza {
     }
 
     public void stampaUscite() {
-        System.out.println("Uscite disponibili:");
+        System.out.println(">> Uscite disponibili:");
         for (String direzione : uscite.keySet()) {
             System.out.println("- " + direzione);
         }
@@ -92,5 +100,5 @@ public class Stanza {
     }
 
 
-    // TODO: parametro nemiciStanza, eventiAutomatici, condizioniAccesso
+    // TODO: parametro nemiciStanza{quasi fatto}, eventiAutomatici, condizioniAccesso{fatto}
 }
