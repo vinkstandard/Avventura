@@ -10,12 +10,15 @@ public class Main {
 
 
         // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere {fatto};
-        //  comando "lascia [oggetto]"
+        //  comando "lascia [oggetto] {fatto}"
         //  parametro nemiciStanza {fatto}
         //  eventiAutomatici
         //  condizioniAccesso {fatto}
-        //  usare armi, e quindi le loro statistiche durante il combattimento
+        //  usare armi, e quindi le loro statistiche durante il combattimento {fatto}
         //  limitare l'inventario del giocatore?
+        //  comando per controllare gli hp del giocatore e l'equipaggiamento indossato, armi/armature/anelli {fatto}
+        //  aggiungere la crit chance anche ai nemici {fatto}
+        //  aggiungere più messaggi di errore, vedi metodo "gestisciInputErrati()" in EngineGioco
 
 
 
@@ -27,7 +30,7 @@ public class Main {
         Inventario inventarioGiocatore = new Inventario();
         Giocatore giocatore = new Giocatore("Marco", mappa.getStanzaIniziale(), inventarioGiocatore);
 
-        Oggetto bussola = new Oggetto("Bussola" , "Una vecchia bussola in ottone, sul retro ci sono incise due iniziali, FP." , true, false, null);
+        Oggetto bussola = new Oggetto("Bussola" , "Una vecchia bussola in ottone, sul retro ci sono incise due iniziali, \"FP\"." , true, false, null);
         Oggetto accendino = new Oggetto("Accendino" , "Un accendino a kerosene, provi ad accenderlo e vedi che funziona." , true, true, null);
 
         inventarioGiocatore.aggiungiOggetto(accendino);
