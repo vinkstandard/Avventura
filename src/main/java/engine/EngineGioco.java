@@ -1,8 +1,5 @@
 package engine;
-import model.Giocatore;
-import model.Nemico;
-import model.Oggetto;
-import model.Stanza;
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +72,18 @@ public class EngineGioco {
             }
             else if (comando.equals("combatti") || comando.startsWith("combatti ")) {
                 combatti();
+            }
+            else if (comando.startsWith("lascia ") || comando.startsWith("droppa ")) {
+                lascia(comando);
+            }
+            else if (comando.startsWith("equipaggia ")) {
+                equipaggia(comando);
+            }
+            else if (comando.equals("info")) {
+                info();
+            }
+            else if (comando.equals("help")) {
+                help();
             }
             else {
                 gestisciInputErrati(comando);
@@ -180,9 +189,10 @@ public class EngineGioco {
         }
 
         System.out.println(">> Hai ingaggiato un combattimento con " + nemico.getNome() + "!");
+        System.out.println(">> Mosse disponibili: \n-Attacca\n-Scappa");
+
         while(nemico.isVivo()){
 
-            System.out.println(">> Mosse disponibili: \n-Attacca\n-Scappa");
             String mossa;
             do{
                 mossa = scanner.nextLine().toLowerCase();
@@ -191,16 +201,17 @@ public class EngineGioco {
                 }
             }while (!mossa.equals("attacca") && !mossa.equals("scappa"));
 
-            if (mossa.equals("attacca")) {
-                // il giocatore colpisce, calcolando anche la possibilità di un colpo critico
-                int dannoCritico = ThreadLocalRandom.current().nextInt(0, giocatore.getDannoBase()); // da 1 fino al danno attuale del giocatore,
+            // turno del giocatore, calcolando anche la possibilità di critico
 
-                if (dannoCritico >= giocatore.getDannoBase() / 2) { // se il numero random genera un numero decente, cioè un numero che sia maggiore o uguale la danno base, allora lo aggiungi al danno
-                    nemico.subisciDanno(giocatore.getDannoBase() + dannoCritico);
-                    System.out.println(">> Hai colpito " + nemico.getNome() + " per " + (giocatore.getDannoBase() + dannoCritico) + " danni, colpo critico!");
-                } else {
-                    nemico.subisciDanno(giocatore.getDannoBase());
-                    System.out.println(">> Hai colpito " + nemico.getNome() + " per " + giocatore.getDannoBase() + " danni.");
+            if (mossa.equals("attacca")) {
+                int dannoInflitto = giocatore.getArmaEquipaggiata().infliggiDanno();
+                if(dannoInflitto > giocatore.getArmaEquipaggiata().getDanno()){
+                    System.out.println(">> Colpo critico! Hai colpito " + nemico.getNome() + " per " + dannoInflitto + " danni.");
+                    nemico.subisciDanno(dannoInflitto);
+                }else{
+                    System.out.println(">> Hai colpito " + nemico.getNome() + " per " + dannoInflitto + " danni.");
+                    nemico.subisciDanno(dannoInflitto);
+
                 }
             }
             if (!nemico.isVivo()) {
@@ -213,6 +224,7 @@ public class EngineGioco {
                 int numeroRandom2 = ThreadLocalRandom.current().nextInt(1,4);
                 if(numeroRandom2 == numeroRandom){
                     System.out.println(">> Sei riuscito a scappare dal combattimento.");
+                    break;
                 }else{
                     System.out.println(">> Tenti di scappare, ma fallisci, il nemico colpisce ti colpisce due volte.");
                     giocatore.subisciDanno(nemico.attacca());
@@ -220,15 +232,16 @@ public class EngineGioco {
                 }
             }
 
-            // il nemico colpisce
-            int dannoCritico = ThreadLocalRandom.current().nextInt(0, nemico.attacca());
-            if(dannoCritico >= nemico.attacca() / 2){
-                giocatore.subisciDanno(nemico.attacca() + dannoCritico);
-                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + (nemico.attacca() + dannoCritico) + " danni, colpo critico!");
+            // turno del nemico, anche lui può crittare
+
+            int dannoInflittoNemico = nemico.attacca();
+            if(dannoInflittoNemico > nemico.getDanno()){
+                giocatore.subisciDanno(dannoInflittoNemico);
+                System.out.println(">> Colpo critico! "+ nemico.getNome() +  " ti ha colpito per " + (dannoInflittoNemico) + " danni.");
 
             }else{
                 giocatore.subisciDanno(nemico.attacca());
-                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + dannoInflittoNemico + " danni.");
             }
 
 
@@ -251,10 +264,59 @@ public class EngineGioco {
             System.out.println(direzione + " --> " + collegata.getNome() + " [" + stato + "]");
         }
     }
+
+    public void lascia(String comando){
+        String nomeOggetto = switch (comando.charAt(0)) {
+            case 'l' -> comando.replaceFirst("lascia ", "");
+            case 'd' -> comando.replaceFirst("droppa ", "");
+            default -> "";
+        };
+        for(Oggetto oggetto: giocatore.getInventario().getOggetti()){
+            if(oggetto.getNome().toLowerCase().contains(nomeOggetto)){
+                giocatore.getStanzaAttuale().aggiungiOggetto(oggetto);
+                System.out.println(">> Hai lasciato: " + oggetto.getNome());
+                return;
+            }
+        }
+        System.out.println(">> Non possiedi quell'oggetto.");
+    }
+    public void equipaggia(String comando){
+        String nomeArma = comando.replaceFirst("equipaggia ", "");
+
+        Oggetto oggetto = giocatore.getInventario().getOggetto(nomeArma);
+        if(oggetto instanceof Arma arma){
+            giocatore.equipaggiaArma(arma);
+            System.out.println(">> Hai equipaggiato " + arma.getNome());
+        }else{
+            System.out.println(">> Non puoi usarlo come arma.");
+        }
+    }
+    public void info(){
+
+        System.out.println("HP: " + giocatore.getVita());
+        System.out.println("Arma equipaggiata: " + giocatore.getArmaEquipaggiata().getNome() + "\tDMG: " + giocatore.getArmaEquipaggiata().getDanno() + "\t CRT: " + giocatore.getArmaEquipaggiata().getPossibilitaCritico() + "%");
+    }
+    public void help(){
+        System.out.println("Comandi validi:");
+        System.out.println("-Movimento--------------------------------------------------------------------\n" +
+                "\"vai\" + direzione (nord, sud, est, ovest): Ti sposti in una direzione.\n" +
+                "\"nord\", \"sud\", \"est\", \"ovest\" (abbreviazione del comando vai).");
+        System.out.println("-Combattimento----------------------------------------------------------------\n" +
+                "\"combatti\"/\"combatti [nome]\": Ingaggi un nemico in combattimento.\n" +
+                "\"equipaggia [nomeArma]\": Equipaggi un arma.\n" +
+                "\"attacca\": Sferri un colpo con l'arma attualmente equipaggiata durante un combattimento.\n" +
+                "\"fuggi\": Tenti di scappare da un combattimento.");
+        System.out.println("-Utilità----------------------------------------------------------------------\n" +
+                "\"info\": Mostra hp giocatore ed equipaggiamento.\n" +
+                "\"guarda\": Ti guardi attorno e controlli se ci sono oggetti.\n" +
+                "\"inventario\": Visualizzi il tuo inventario.\n" +
+                "\"usa [nomeOggetto] + direzione\": Usi un oggetto in una direzione. Es: usa spranga nord\n" +
+                "\"esci\": Esci dal gioco");
+
+    }
     public void gestisciInputErrati(String comando){
 
         // qui scriverò tutti i messaggi di errore personalizzati
-
 
         if(comando.equals("attacca") || comando.startsWith("attacca ")){ // da modificare poi con un check per vedere se ci sono effettivamente nemici da attaccare, per ora il comando per attaccare è solo "combatti"
             Nemico nemico = giocatore.getStanzaAttuale().getNemico();
@@ -266,5 +328,4 @@ public class EngineGioco {
             System.out.println(">> Comando non valido.");
         }
     }
-
 }
