@@ -19,6 +19,7 @@ public class Main {
         //  comando per controllare gli hp del giocatore e l'equipaggiamento indossato, armi/armature/anelli {fatto}
         //  aggiungere la crit chance anche ai nemici {fatto}
         //  aggiungere più messaggi di errore, vedi metodo "gestisciInputErrati()" in EngineGioco
+        //  aggiungi un modo per cambiare/usare equipaggiamenti durante il combattimento
 
 
 
