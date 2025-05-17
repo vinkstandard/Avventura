@@ -1,5 +1,6 @@
 package gioco;
 
+import model.Arma;
 import model.Nemico;
 import model.Stanza;
 import model.Oggetto;
@@ -78,7 +79,7 @@ public class Mappa {
         ovestVilla.aggiungiUscita("nord", cucinaVilla, false, null);
 
 //        cucina villa
-        Oggetto coltello = new Oggetto("Coltello", "Un coltello da cucina ben affilato", true, true, null);
+        Arma coltello = new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20);
         cucinaVilla.aggiungiOggetto(coltello);
         cucinaVilla.aggiungiUscita("sud", ovestVilla, false, null);
         cucinaVilla.aggiungiUscita("est", atrioVilla, false, null);
@@ -88,7 +89,7 @@ public class Mappa {
         salaDaPranzoVilla.aggiungiUscita("sud", cucinaVilla, false, null);
 
 //        atrio villa
-        Nemico goblin = new Nemico("Goblin", 40, 10);
+        Nemico goblin = new Nemico("Goblin", 40, 7, 5);
         atrioVilla.setNemico(goblin);
         atrioVilla.aggiungiUscita("ovest", cucinaVilla, false, null);
 
