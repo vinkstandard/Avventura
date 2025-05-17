@@ -20,6 +20,7 @@ public class Main {
         //  aggiungere la crit chance anche ai nemici {fatto}
         //  aggiungere più messaggi di errore, vedi metodo "gestisciInputErrati()" in EngineGioco
         //  aggiungi un modo per cambiare/usare equipaggiamenti durante il combattimento
+        //  quando il giocatore vince il check per scappare dalla fight, deve poi decidere dove scappare(direzione)
 
 
 
