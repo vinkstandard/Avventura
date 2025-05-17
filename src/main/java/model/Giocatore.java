@@ -6,12 +6,14 @@ public class Giocatore {
     private Inventario inventario;
     private int vita;
     private int dannoBase = 5; // a mani nude
+    private Arma armaEquipaggiata;
 
     public Giocatore(String nome, Stanza stanzaAttuale, Inventario inventario) {
         this.nome = nome;
         this.stanzaAttuale = stanzaAttuale;
         this.inventario = inventario;
         this.vita = 100; // hp max
+        this.armaEquipaggiata = new Arma("Disarmato", "Le tue mani", 5,5); // di default siamo disarmati
     }
 
     public void subisciDanno(int danno){
@@ -20,6 +22,13 @@ public class Giocatore {
     }
     public int getDannoBase(){
         return dannoBase;
+    }
+    public void equipaggiaArma(Arma arma){
+        this.armaEquipaggiata = arma;
+    }
+
+    public Arma getArmaEquipaggiata(){
+        return armaEquipaggiata;
     }
 
     public int getVita() {
