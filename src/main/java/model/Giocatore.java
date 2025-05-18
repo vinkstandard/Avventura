@@ -13,12 +13,14 @@ public class Giocatore {
         this.stanzaAttuale = stanzaAttuale;
         this.inventario = inventario;
         this.vita = 100; // hp max
-        this.armaEquipaggiata = new Arma("Disarmato", "Le tue mani", 5,5); // di default siamo disarmati
     }
 
     public void subisciDanno(int danno){
         this.vita -= danno;
         if(this.vita < 0) this.vita = 0;
+    }
+    public void guadagnaHpGiocatore(int hp){
+        this.vita += hp;
     }
     public int getDannoBase(){
         return dannoBase;
