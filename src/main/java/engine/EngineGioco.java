@@ -70,11 +70,14 @@ public class EngineGioco {
             } else if (comando.equals("debug")) {
                 debug();
             }
-            else if (comando.equals("combatti") || comando.startsWith("combatti ")) {
+            else if (comando.equals("combatti") || comando.startsWith("combatti ") || comando.equals("attacca") || comando.startsWith("attacca ")) {
                 combatti();
             }
             else if (comando.startsWith("lascia ") || comando.startsWith("droppa ")) {
                 lascia(comando);
+            }
+            else if (comando.startsWith("bevi ") || comando.equals("bevi")) {
+                bevi();
             }
             else if (comando.startsWith("equipaggia ")) {
                 equipaggia(comando);
@@ -189,21 +192,32 @@ public class EngineGioco {
         }
 
         System.out.println(">> Hai ingaggiato un combattimento con " + nemico.getNome() + "!");
-        System.out.println(">> Mosse disponibili: \n-Attacca\n-Scappa");
+        System.out.println(">> Mosse disponibili: \n-Attacca\n-Equipaggia {arma}\n-Curati\n-Scappa");
 
         while(nemico.isVivo()){
 
             String mossa;
             do{
                 mossa = scanner.nextLine().toLowerCase();
-                if (!mossa.equals("attacca") && !mossa.equals("scappa")) {
+                if (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati")) {
                     System.out.println(">> Comando non valido.");
                 }
-            }while (!mossa.equals("attacca") && !mossa.equals("scappa"));
+            }while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati"));
 
             // turno del giocatore, calcolando anche la possibilità di critico
 
+            if(mossa.equals("curati")){
+                bevi();
+            }
+            else if(mossa.startsWith("equipaggia ")){
+                equipaggia(mossa);
+            }
+
             if (mossa.equals("attacca")) {
+                if(giocatore.getArmaEquipaggiata() == null){
+                    System.out.println(">> Ti serve un arma per attaccare!");
+                    continue;
+                }
                 int dannoInflitto = giocatore.getArmaEquipaggiata().infliggiDanno();
                 if(dannoInflitto > giocatore.getArmaEquipaggiata().getDanno()){
                     System.out.println(">> Colpo critico! Hai colpito " + nemico.getNome() + " per " + dannoInflitto + " danni.");
@@ -251,6 +265,36 @@ public class EngineGioco {
             }
         }
     }
+    public void bevi(){
+        Scanner scanner = new Scanner(System.in);
+        boolean haOggettiCurativi = false;
+        List<Oggetto> oggettiCurativi = new ArrayList<>();
+        for(Oggetto oggetto : giocatore.getInventario().getOggetti()){
+            if(oggetto.getEffetto() != null && oggetto.getEffetto().equals("curativo")){ // qui poi metteremo anche i veleni non solo curativo, nel caso in cui il giocatore voglia provare a berli
+                haOggettiCurativi = true;
+                oggettiCurativi.add(oggetto);
+            }
+        }
+        if(!haOggettiCurativi){
+            System.out.println(">> Non possiedi oggetti da bere.");
+            return;
+        }
+        int numOggetto = 0;
+        System.out.println(">> Consumabili in tuo possesso:");
+        for(Oggetto oggettoCurativo : oggettiCurativi){
+            System.out.println((numOggetto + 1) + ". " + oggettoCurativo.getNome() + ": " + oggettoCurativo.getDescrizione());
+            numOggetto++;
+        }
+        System.out.println(">> Inserisci il numero dell'oggetto che vuoi utilizzare.");
+        String numero = scanner.nextLine();
+        if(numero.length() > 1 || !Character.isDigit(numero.charAt(0)) || Integer.parseInt(numero) - 1 > oggettiCurativi.size()){
+            System.out.println(">> Numero non valido.");
+        }else{
+            curaGiocatore(oggettiCurativi.get(Integer.parseInt(numero) - 1).getNome());
+            giocatore.getInventario().rimuoviOggetto(oggettiCurativi.get(Integer.parseInt(numero) - 1).getNome());
+        }
+
+    }
 
     private void debug() {
         Stanza stanzaAttuale = giocatore.getStanzaAttuale();
@@ -291,6 +335,12 @@ public class EngineGioco {
             System.out.println(">> Non puoi usarlo come arma.");
         }
     }
+    public void curaGiocatore(String nome){ // nome fa riferimento a un oggetto curativo, o a una possible abilità
+        if(nome.equalsIgnoreCase("Pozione Rossa")){
+            giocatore.guadagnaHpGiocatore(40);
+            System.out.println(">> Hai usato " + nome + "!");
+        }
+    }
     public void info(){
 
         System.out.println("HP: " + giocatore.getVita());
@@ -318,11 +368,8 @@ public class EngineGioco {
 
         // qui scriverò tutti i messaggi di errore personalizzati
 
-        if(comando.equals("attacca") || comando.startsWith("attacca ")){ // da modificare poi con un check per vedere se ci sono effettivamente nemici da attaccare, per ora il comando per attaccare è solo "combatti"
-            Nemico nemico = giocatore.getStanzaAttuale().getNemico();
-            if(nemico == null){
-                System.out.println(">> Non c'è nulla da attaccare qui.");
-            }
+        if(comando.equals("per ora non so cosa mettere")){
+
         }
         else{
             System.out.println(">> Comando non valido.");
