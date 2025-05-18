@@ -192,10 +192,10 @@ public class EngineGioco {
             String mossa;
             do {
                 mossa = scanner.nextLine().toLowerCase();
-                if (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati")) {
+                if (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati") && !mossa.equals("info")) {
                     System.out.println(">> Comando non valido.");
                 }
-            } while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati"));
+            } while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati") && !mossa.equals("info"));
 
             // turno del giocatore, calcolando anche la possibilità di critico
 
@@ -204,6 +204,10 @@ public class EngineGioco {
             } else if (mossa.startsWith("equipaggia ")) {
                 equipaggia(mossa);
             }
+            else if (mossa.startsWith("info")) {
+                info();
+            }
+
 
             if (mossa.equals("attacca")) {
                 if (giocatore.getArmaEquipaggiata() == null) {
@@ -243,11 +247,11 @@ public class EngineGioco {
             int dannoInflittoNemico = nemico.attacca();
             if (dannoInflittoNemico > nemico.getDanno()) {
                 giocatore.subisciDanno(dannoInflittoNemico);
-                System.out.println(">> Colpo critico! " + nemico.getNome() + " ti ha colpito per " + (dannoInflittoNemico) + " danni.");
+                System.out.println(">> Colpo critico! " + nemico.getNome() + " ti ha colpito per " + (dannoInflittoNemico) + " danni.\n>> Ti restano: " + giocatore.getVita() + " hp.");
 
             } else {
                 giocatore.subisciDanno(nemico.attacca());
-                System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + dannoInflittoNemico + " danni.");
+                System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + dannoInflittoNemico + " danni.\n>> Ti restano: " + giocatore.getVita() + " hp.");
             }
 
 
