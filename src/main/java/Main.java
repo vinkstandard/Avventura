@@ -1,26 +1,25 @@
 import engine.EngineGioco;
 import gioco.Mappa;
-import model.Giocatore;
-import model.Inventario;
-import model.Oggetto;
-import model.Stanza;
+import model.*;
 
 public class Main {
     public static void main(String[] args) {
 
 
-        // TODO:  vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere {fatto};
-        //  comando "lascia [oggetto] {fatto}"
-        //  parametro nemiciStanza {fatto}
+        // TODO:
+        //  {fatto} vincoli, cioè porte/luoghi che richiedono che il giocatore faccia x per accedere;
+        //  {fatto} comando "lascia [oggetto]"
+        //  {fatto} parametro nemiciStanza
         //  eventiAutomatici
-        //  condizioniAccesso {fatto}
-        //  usare armi, e quindi le loro statistiche durante il combattimento {fatto}
+        //  {fatto} condizioniAccesso
+        //  {fatto} usare armi, e quindi le loro statistiche durante il combattimento
         //  limitare l'inventario del giocatore?
-        //  comando per controllare gli hp del giocatore e l'equipaggiamento indossato, armi/armature/anelli {fatto}
-        //  aggiungere la crit chance anche ai nemici {fatto}
+        //  {fatto} comando per controllare gli hp del giocatore e l'equipaggiamento indossato, armi/armature/anelli
+        //  {fatto} aggiungere la crit chance anche ai nemici
         //  aggiungere più messaggi di errore, vedi metodo "gestisciInputErrati()" in EngineGioco
-        //  aggiungi un modo per cambiare/usare equipaggiamenti durante il combattimento
+        //  {fatto} aggiungi un modo per cambiare/usare equipaggiamenti durante il combattimento
         //  quando il giocatore vince il check per scappare dalla fight, deve poi decidere dove scappare(direzione)
+        //  {fatto} aggiungere item curativi e un modo per utilizzarli
 
 
 
@@ -32,11 +31,13 @@ public class Main {
         Inventario inventarioGiocatore = new Inventario();
         Giocatore giocatore = new Giocatore("Marco", mappa.getStanzaIniziale(), inventarioGiocatore);
 
+        Arma disarmato = new Arma("Disarmato", "Le tue mani nude", 5, 10);
         Oggetto bussola = new Oggetto("Bussola" , "Una vecchia bussola in ottone, sul retro ci sono incise due iniziali, \"FP\"." , true, false, null);
         Oggetto accendino = new Oggetto("Accendino" , "Un accendino a kerosene, provi ad accenderlo e vedi che funziona." , true, true, null);
 
         inventarioGiocatore.aggiungiOggetto(accendino);
         inventarioGiocatore.aggiungiOggetto(bussola);
+        inventarioGiocatore.aggiungiOggetto(disarmato);
 
         // creo l'engine
 
