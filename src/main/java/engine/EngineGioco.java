@@ -69,26 +69,19 @@ public class EngineGioco {
 
             } else if (comando.equals("debug")) {
                 debug();
-            }
-            else if (comando.equals("combatti") || comando.startsWith("combatti ") || comando.equals("attacca") || comando.startsWith("attacca ")) {
+            } else if (comando.equals("combatti") || comando.startsWith("combatti ") || comando.equals("attacca") || comando.startsWith("attacca ")) {
                 combatti();
-            }
-            else if (comando.startsWith("lascia ") || comando.startsWith("droppa ")) {
+            } else if (comando.startsWith("lascia ") || comando.startsWith("droppa ")) {
                 lascia(comando);
-            }
-            else if (comando.startsWith("bevi ") || comando.equals("bevi")) {
+            } else if (comando.startsWith("bevi ") || comando.equals("bevi")) {
                 bevi();
-            }
-            else if (comando.startsWith("equipaggia ")) {
+            } else if (comando.startsWith("equipaggia ")) {
                 equipaggia(comando);
-            }
-            else if (comando.equals("info")) {
+            } else if (comando.equals("info")) {
                 info();
-            }
-            else if (comando.equals("help")) {
+            } else if (comando.equals("help")) {
                 help();
-            }
-            else {
+            } else {
                 gestisciInputErrati(comando);
             }
         }
@@ -182,11 +175,11 @@ public class EngineGioco {
 
     }
 
-    private void combatti(){
+    private void combatti() {
         Scanner scanner = new Scanner(System.in);
         Nemico nemico = giocatore.getStanzaAttuale().getNemico();
 
-        if(nemico == null){
+        if (nemico == null) {
             System.out.println(">> Non c'è nessuno da combattere qui.");
             return;
         }
@@ -194,35 +187,34 @@ public class EngineGioco {
         System.out.println(">> Hai ingaggiato un combattimento con " + nemico.getNome() + "!");
         System.out.println(">> Mosse disponibili: \n-Attacca\n-Equipaggia {arma}\n-Curati\n-Scappa");
 
-        while(nemico.isVivo()){
+        while (nemico.isVivo()) {
 
             String mossa;
-            do{
+            do {
                 mossa = scanner.nextLine().toLowerCase();
                 if (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati")) {
                     System.out.println(">> Comando non valido.");
                 }
-            }while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati"));
+            } while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati"));
 
             // turno del giocatore, calcolando anche la possibilità di critico
 
-            if(mossa.equals("curati")){
+            if (mossa.equals("curati")) {
                 bevi();
-            }
-            else if(mossa.startsWith("equipaggia ")){
+            } else if (mossa.startsWith("equipaggia ")) {
                 equipaggia(mossa);
             }
 
             if (mossa.equals("attacca")) {
-                if(giocatore.getArmaEquipaggiata() == null){
+                if (giocatore.getArmaEquipaggiata() == null) {
                     System.out.println(">> Ti serve un arma per attaccare!");
                     continue;
                 }
                 int dannoInflitto = giocatore.getArmaEquipaggiata().infliggiDanno();
-                if(dannoInflitto > giocatore.getArmaEquipaggiata().getDanno()){
+                if (dannoInflitto > giocatore.getArmaEquipaggiata().getDanno()) {
                     System.out.println(">> Colpo critico! Hai colpito " + nemico.getNome() + " per " + dannoInflitto + " danni.");
                     nemico.subisciDanno(dannoInflitto);
-                }else{
+                } else {
                     System.out.println(">> Hai colpito " + nemico.getNome() + " per " + dannoInflitto + " danni.");
                     nemico.subisciDanno(dannoInflitto);
 
@@ -233,63 +225,64 @@ public class EngineGioco {
                 giocatore.getStanzaAttuale().setNemico(null); // rimuoviamo il nemico dalla stanza
                 break;
             }
-            if(mossa.equals("scappa")){
-                int numeroRandom = ThreadLocalRandom.current().nextInt(1,4);
-                int numeroRandom2 = ThreadLocalRandom.current().nextInt(1,4);
-                if(numeroRandom2 == numeroRandom){
+            if (mossa.equals("scappa")) {
+                int numeroRandom = ThreadLocalRandom.current().nextInt(1, 4);
+                int numeroRandom2 = ThreadLocalRandom.current().nextInt(1, 4);
+                if (numeroRandom2 == numeroRandom) {
                     System.out.println(">> Sei riuscito a scappare dal combattimento.");
                     break;
-                }else{
+                } else {
                     System.out.println(">> Tenti di scappare, ma fallisci, il nemico colpisce ti colpisce due volte.");
                     giocatore.subisciDanno(nemico.attacca());
-                    System.out.println(">> " + nemico.getNome() +  " ti ha colpito per " + nemico.attacca() + " danni.");
+                    System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + nemico.attacca() + " danni.");
                 }
             }
 
             // turno del nemico, anche lui può crittare
 
             int dannoInflittoNemico = nemico.attacca();
-            if(dannoInflittoNemico > nemico.getDanno()){
+            if (dannoInflittoNemico > nemico.getDanno()) {
                 giocatore.subisciDanno(dannoInflittoNemico);
-                System.out.println(">> Colpo critico! "+ nemico.getNome() +  " ti ha colpito per " + (dannoInflittoNemico) + " danni.");
+                System.out.println(">> Colpo critico! " + nemico.getNome() + " ti ha colpito per " + (dannoInflittoNemico) + " danni.");
 
-            }else{
+            } else {
                 giocatore.subisciDanno(nemico.attacca());
-                System.out.println(">> "+ nemico.getNome() +  " ti ha colpito per " + dannoInflittoNemico + " danni.");
+                System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + dannoInflittoNemico + " danni.");
             }
 
 
-            if(giocatore.getVita() <= 0){
+            if (giocatore.getVita() <= 0) {
                 System.out.println(">> Sei stato sconfitto.\nGame Over.");
                 System.exit(11);
             }
         }
     }
-    public void bevi(){
+
+    public void bevi() {
         Scanner scanner = new Scanner(System.in);
         boolean haOggettiCurativi = false;
         List<Oggetto> oggettiCurativi = new ArrayList<>();
-        for(Oggetto oggetto : giocatore.getInventario().getOggetti()){
-            if(oggetto.getEffetto() != null && oggetto.getEffetto().equals("curativo")){ // qui poi metteremo anche i veleni non solo curativo, nel caso in cui il giocatore voglia provare a berli
+        for (Oggetto oggetto : giocatore.getInventario().getOggetti()) {
+            if (oggetto.getEffetto() != null && oggetto.getEffetto().equals("curativo")) { // qui poi metteremo anche i veleni non solo curativo, nel caso in cui il giocatore voglia provare a berli
                 haOggettiCurativi = true;
                 oggettiCurativi.add(oggetto);
             }
         }
-        if(!haOggettiCurativi){
+        if (!haOggettiCurativi) {
             System.out.println(">> Non possiedi oggetti da bere.");
             return;
         }
         int numOggetto = 0;
         System.out.println(">> Consumabili in tuo possesso:");
-        for(Oggetto oggettoCurativo : oggettiCurativi){
+        for (Oggetto oggettoCurativo : oggettiCurativi) {
             System.out.println((numOggetto + 1) + ". " + oggettoCurativo.getNome() + ": " + oggettoCurativo.getDescrizione());
             numOggetto++;
         }
         System.out.println(">> Inserisci il numero dell'oggetto che vuoi utilizzare.");
         String numero = scanner.nextLine();
-        if(numero.length() > 1 || !Character.isDigit(numero.charAt(0)) || Integer.parseInt(numero) - 1 > oggettiCurativi.size()){
+        if (numero.length() > 1 || !Character.isDigit(numero.charAt(0)) || Integer.parseInt(numero) - 1 > oggettiCurativi.size()) {
             System.out.println(">> Numero non valido.");
-        }else{
+        } else {
             curaGiocatore(oggettiCurativi.get(Integer.parseInt(numero) - 1).getNome());
             giocatore.getInventario().rimuoviOggetto(oggettiCurativi.get(Integer.parseInt(numero) - 1).getNome());
         }
@@ -309,14 +302,14 @@ public class EngineGioco {
         }
     }
 
-    public void lascia(String comando){
+    public void lascia(String comando) {
         String nomeOggetto = switch (comando.charAt(0)) {
             case 'l' -> comando.replaceFirst("lascia ", "");
             case 'd' -> comando.replaceFirst("droppa ", "");
             default -> "";
         };
-        for(Oggetto oggetto: giocatore.getInventario().getOggetti()){
-            if(oggetto.getNome().toLowerCase().contains(nomeOggetto)){
+        for (Oggetto oggetto : giocatore.getInventario().getOggetti()) {
+            if (oggetto.getNome().toLowerCase().contains(nomeOggetto)) {
                 giocatore.getStanzaAttuale().aggiungiOggetto(oggetto);
                 System.out.println(">> Hai lasciato: " + oggetto.getNome());
                 return;
@@ -324,29 +317,33 @@ public class EngineGioco {
         }
         System.out.println(">> Non possiedi quell'oggetto.");
     }
-    public void equipaggia(String comando){
+
+    public void equipaggia(String comando) {
         String nomeArma = comando.replaceFirst("equipaggia ", "");
 
         Oggetto oggetto = giocatore.getInventario().getOggetto(nomeArma);
-        if(oggetto instanceof Arma arma){
+        if (oggetto instanceof Arma arma) {
             giocatore.equipaggiaArma(arma);
             System.out.println(">> Hai equipaggiato " + arma.getNome());
-        }else{
+        } else {
             System.out.println(">> Non puoi usarlo come arma.");
         }
     }
-    public void curaGiocatore(String nome){ // nome fa riferimento a un oggetto curativo, o a una possible abilità
-        if(nome.equalsIgnoreCase("Pozione Rossa")){
+
+    public void curaGiocatore(String nome) { // nome fa riferimento a un oggetto curativo, o a una possible abilità
+        if (nome.equalsIgnoreCase("Pozione Rossa")) {
             giocatore.guadagnaHpGiocatore(40);
             System.out.println(">> Hai usato " + nome + "!");
         }
     }
-    public void info(){
+
+    public void info() {
 
         System.out.println("HP: " + giocatore.getVita());
         System.out.println("Arma equipaggiata: " + giocatore.getArmaEquipaggiata().getNome() + "\tDMG: " + giocatore.getArmaEquipaggiata().getDanno() + "\t CRT: " + giocatore.getArmaEquipaggiata().getPossibilitaCritico() + "%");
     }
-    public void help(){
+
+    public void help() {
         System.out.println("Comandi validi:");
         System.out.println("-Movimento--------------------------------------------------------------------\n" +
                 "\"vai\" + direzione (nord, sud, est, ovest): Ti sposti in una direzione.\n" +
@@ -364,14 +361,14 @@ public class EngineGioco {
                 "\"esci\": Esci dal gioco");
 
     }
-    public void gestisciInputErrati(String comando){
+
+    public void gestisciInputErrati(String comando) {
 
         // qui scriverò tutti i messaggi di errore personalizzati
 
-        if(comando.equals("per ora non so cosa mettere")){
+        if (comando.equals("per ora non so cosa mettere")) {
 
-        }
-        else{
+        } else {
             System.out.println(">> Comando non valido.");
         }
     }
