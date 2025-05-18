@@ -80,10 +80,12 @@ public class Mappa {
 
 //        cucina villa
         Arma coltello = new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20);
+        cucinaVilla.aggiungiOggetto(new Oggetto("Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere.", true,true, "curativo"));
         cucinaVilla.aggiungiOggetto(coltello);
         cucinaVilla.aggiungiUscita("sud", ovestVilla, false, null);
         cucinaVilla.aggiungiUscita("est", atrioVilla, false, null);
         cucinaVilla.aggiungiUscita("nord", salaDaPranzoVilla, false, null);
+
 
 //        sala da pranzo
         salaDaPranzoVilla.aggiungiUscita("sud", cucinaVilla, false, null);
