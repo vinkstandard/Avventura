@@ -24,12 +24,12 @@ public class Mappa {
         Stanza sterpaglie = new Stanza("Sterpaglie", "Sei in una fitta foresta che si estende in tutte le direzioni. Vedi delle luci verso nord.");
 
         Stanza cancelloArrugginito = new Stanza("Cancello arrugginito", "Sei davanti a un cancello arrugginito, " +
-                "oltre in cancello riesci a scrutare una strada sterrata che conduce ad un grande edificio. Ai tuoi piedi c'è una spranga di metallo.");
+                "oltre il cancello riesci a scrutare una strada sterrata che conduce ad un grande edificio. Ai tuoi piedi c'è una spranga di metallo.");
 
         Stanza stradaSterrata = new Stanza("Strada sterrata", "Sei su una strada sterrata, a nord la strada conduce ad una villa gotica, " +
                 "verso est noti delle orme nel fango conducono ad un vecchio capanno");
 
-        Stanza capannoAttrezzi = new Stanza("Capanno per gli attrezzi", "Sei davanti ad un vecchio capanno per gli attrezzi in disuso." +
+        Stanza capannoAttrezzi = new Stanza("Capanno per gli attrezzi", "Sei dentro ad un vecchio capanno per gli attrezzi in disuso." +
                 " La porta del capanno è a terra fradicia. Riesci a scrutare una vecchia lanterna a olio sul bancone.");
 
         Stanza fronteVilla = new Stanza("Ingresso nord-Villa", "Sei davanti all'ingresso principale della villa, la porta è in legno robusto e non ha una serratura. " +
@@ -44,7 +44,7 @@ public class Mappa {
         Stanza atrioVilla = new Stanza("Atrio villa", "Sei nell'atrio della villa, davanti a te, di spalle, c'è una creatura che ansima guardando la porta di ingresso." +
                 " Non sembra avere buone intenzioni.");
 
-        Stanza salaDaPranzoVilla = new Stanza("Sala da pranzo", "Una sala da pranzo in stile coloniale. La tavola è apparecchiata, e i piatti sono pieni vermi." +
+        Stanza salaDaPranzoVilla = new Stanza("Sala da pranzo", "Una sala da pranzo in stile coloniale. La tavola è apparecchiata, e i piatti sono pieni di vermi." +
                 " Emana un pessimo odore.");
 
 
@@ -64,8 +64,7 @@ public class Mappa {
 
 //        capanno attrezzi
         capannoAttrezzi.aggiungiUscita("ovest", stradaSterrata, false, null);
-        Oggetto lanterna = new Oggetto("Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null);
-        capannoAttrezzi.aggiungiOggetto(lanterna);
+        capannoAttrezzi.aggiungiOggetto(new Oggetto("Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null));
 
 //        fronte villa
         Oggetto sfera = new Oggetto("Sfera", "Una sfera in vetro decorato.", true, true, null);
@@ -79,9 +78,9 @@ public class Mappa {
         ovestVilla.aggiungiUscita("nord", cucinaVilla, false, null);
 
 //        cucina villa
-        Arma coltello = new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20);
+
         cucinaVilla.aggiungiOggetto(new Oggetto("Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere.", true,true, "curativo"));
-        cucinaVilla.aggiungiOggetto(coltello);
+        cucinaVilla.aggiungiOggetto(new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20));
         cucinaVilla.aggiungiUscita("sud", ovestVilla, false, null);
         cucinaVilla.aggiungiUscita("est", atrioVilla, false, null);
         cucinaVilla.aggiungiUscita("nord", salaDaPranzoVilla, false, null);
