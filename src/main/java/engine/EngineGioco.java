@@ -117,16 +117,22 @@ public class EngineGioco {
             }
         }
 
-        if (oggettoTrovato != null) { // se l'oggetto esiste
+        if (oggettoTrovato != null && oggettoTrovato.isRaccoglibile()) { // se l'oggetto esiste, ed è raccoglibile
             giocatore.getInventario().aggiungiOggetto(oggettoTrovato); // lo aggiungiamo all'inventario
             giocatore.getStanzaAttuale().getOggettiPresenti().remove(oggettoTrovato); // e lo rimuoviamo dalla stanza
 
             // test per rimovere l'oggetto a terra dalla descrizione della stanza
             giocatore.getStanzaAttuale().setDescrizione(rimuoviOggettoDaTerra(giocatore.getStanzaAttuale().getDescrizione(), nomeOggetto)); // da testare, meglio passare nomeOggetto che oggettoTrovato.getNome() poiché il nome dell'oggetto potrebbe non coincidere al 100%
 
-            System.out.println(">> Hai raccolto: " + oggettoTrovato.getNome());
+            System.out.println(">> Hai raccolto: " + oggettoTrovato.getNome() + ".");
         } else {
-            System.out.println(">> Oggetto non trovato");
+            if(oggettoTrovato == null){
+                System.out.println(">> Oggetto non trovato.");
+            }
+            else if(!oggettoTrovato.isRaccoglibile()){
+                System.out.println(">> Non puoi raccogliere questo oggetto.");
+
+            }
         }
 
     }
@@ -349,20 +355,23 @@ public class EngineGioco {
 
     public void help() {
         System.out.println("Comandi validi:");
-        System.out.println("-Movimento--------------------------------------------------------------------\n" +
-                "\"vai\" + direzione (nord, sud, est, ovest): Ti sposti in una direzione.\n" +
-                "\"nord\", \"sud\", \"est\", \"ovest\" (abbreviazione del comando vai).");
-        System.out.println("-Combattimento----------------------------------------------------------------\n" +
-                "\"combatti\"/\"combatti [nome]\": Ingaggi un nemico in combattimento.\n" +
-                "\"equipaggia [nomeArma]\": Equipaggi un arma.\n" +
-                "\"attacca\": Sferri un colpo con l'arma attualmente equipaggiata durante un combattimento.\n" +
-                "\"fuggi\": Tenti di scappare da un combattimento.");
-        System.out.println("-Utilità----------------------------------------------------------------------\n" +
-                "\"info\": Mostra hp giocatore ed equipaggiamento.\n" +
-                "\"guarda\": Ti guardi attorno e controlli se ci sono oggetti.\n" +
-                "\"inventario\": Visualizzi il tuo inventario.\n" +
-                "\"usa [nomeOggetto] + direzione\": Usi un oggetto in una direzione. Es: usa spranga nord\n" +
-                "\"esci\": Esci dal gioco");
+        System.out.println("""
+                -Movimento--------------------------------------------------------------------
+                "vai" + direzione (nord, sud, est, ovest): Ti sposti in una direzione.
+                "nord", "sud", "est", "ovest" (abbreviazione del comando vai).""");
+        System.out.println("""
+                -Combattimento----------------------------------------------------------------
+                "combatti"/"combatti [nome]": Ingaggi un nemico in combattimento.
+                "equipaggia [nomeArma]": Equipaggi un arma.
+                "attacca": Sferri un colpo con l'arma attualmente equipaggiata durante un combattimento.
+                "fuggi": Tenti di scappare da un combattimento.""");
+        System.out.println("""
+                -Utilità----------------------------------------------------------------------
+                "info": Mostra hp giocatore ed equipaggiamento.
+                "guarda": Ti guardi attorno e controlli se ci sono oggetti.
+                "inventario": Visualizzi il tuo inventario.
+                "usa [nomeOggetto] + direzione": Usi un oggetto in una direzione. Es: usa spranga nord
+                "esci": Esci dal gioco""");
 
     }
 
