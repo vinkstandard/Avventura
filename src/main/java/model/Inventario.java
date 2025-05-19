@@ -19,8 +19,14 @@ public class Inventario {
     }
 
     public Oggetto getOggetto(String nomeOggetto) {
-        return oggetti.stream()
-                .filter(i -> i.getNome().equalsIgnoreCase(nomeOggetto)).findFirst().orElse(null);
+//        return oggetti.stream()
+//                .filter(i -> i.getNome().equalsIgnoreCase(nomeOggetto)).findFirst().orElse(null);
+        for(Oggetto oggettoInventario : oggetti){
+            if(oggettoInventario.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())) {
+                return oggettoInventario;
+            }
+        }
+        return null;
     }
 
     public List<Oggetto> getOggetti() {
