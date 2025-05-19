@@ -8,7 +8,7 @@ public class Arma extends Oggetto {
     private int possibilitaCritico;
 
     public Arma(String nome, String descrizione, int danno, int possibilitaCritico){
-        super(nome, descrizione);
+        super(nome, descrizione, true); // raccoglibile di default
         this.danno = danno;
         this.possibilitaCritico = possibilitaCritico;
     }
