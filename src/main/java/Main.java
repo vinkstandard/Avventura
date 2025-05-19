@@ -22,9 +22,7 @@ public class Main {
         //  {fatto} aggiungere item curativi e un modo per utilizzarli
         //  {fatto} aggiungi un check per quando il giocatore cerca di usare gli oggetti che hanno la boolean "usabile" su false, o di raccogliere quelli con "raccoglibile" = false
         //  aggiungi un bottino per il nemico sconfitto
-
-
-
+        //  aggiungi che alcune stanze saranno inaccessibili poichè buie, e quindi programma l'uso della lanterna
 
 
         stampaIntroduzione();
@@ -35,13 +33,9 @@ public class Main {
         Inventario inventarioGiocatore = new Inventario();
         Giocatore giocatore = new Giocatore("Marco", mappa.getStanzaIniziale(), inventarioGiocatore);
 
-        Arma disarmato = new Arma("Disarmato", "Le tue mani nude", 5, 10);
-        Oggetto bussola = new Oggetto("Bussola" , "Una vecchia bussola in ottone, sul retro ci sono incise due iniziali, \"FP\"." , true, false, null);
-        Oggetto accendino = new Oggetto("Accendino" , "Un accendino a kerosene, provi ad accenderlo e vedi che funziona." , true, true, null);
-
-        inventarioGiocatore.aggiungiOggetto(accendino);
-        inventarioGiocatore.aggiungiOggetto(bussola);
-        inventarioGiocatore.aggiungiOggetto(disarmato);
+        inventarioGiocatore.aggiungiOggetto(new Oggetto("Accendino", "Un accendino a kerosene, provi ad accenderlo e vedi che funziona.", true, true, null));
+        inventarioGiocatore.aggiungiOggetto(new Oggetto("Bussola", "Una vecchia bussola in ottone, sul retro ci sono incise due iniziali, \"FP\".", true, false, null));
+        inventarioGiocatore.aggiungiOggetto(new Arma("Disarmato", "Le tue mani nude", 5, 10));
 
         // creo l'engine
 
@@ -51,9 +45,12 @@ public class Main {
 
 
     // scriverò altro nell'introduzione, per ora lasciamola così
-    public static void stampaIntroduzione(){
-        System.out.println("-----Benvenuto in [nomeAvventura], un'avventura fantasy testuale-----\n" +
-                "Ti risvegli in una foresta, non hai memoria di chi sei e come ci sei finito. Ti senti smarrito e sta iniziando a fare buio. " +
-                "\nControllandoti le tasche, noti che hai una bussola in ottone e un accendino.\n");
+    public static void stampaIntroduzione() {
+        System.out.println("""
+                -----Benvenuto in [nomeAvventura], un'avventura fantasy testuale-----
+
+                Ti risvegli in una foresta, non hai memoria di chi sei e di come ci sei finito. Ti senti smarrito e sta iniziando a fare buio.\s
+                Controllandoti le tasche, noti che hai una bussola in ottone e un accendino.
+                """);
     }
 }
