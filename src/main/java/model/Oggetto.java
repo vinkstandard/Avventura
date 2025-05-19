@@ -16,9 +16,10 @@ public class Oggetto {
         this.effetto = effetto;
     }
     // constructor per l'arma
-    public Oggetto(String nome, String descrizione) {
+    public Oggetto(String nome, String descrizione, boolean raccoglibile) {
         this.nome = nome;
         this.descrizione = descrizione;
+        this.raccoglibile = raccoglibile;
     }
 
 
