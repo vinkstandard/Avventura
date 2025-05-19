@@ -20,7 +20,7 @@ public class Main {
         //  {fatto} aggiungi un modo per cambiare/usare equipaggiamenti durante il combattimento
         //  quando il giocatore vince il check per scappare dalla fight, deve poi decidere dove scappare(direzione)
         //  {fatto} aggiungere item curativi e un modo per utilizzarli
-        //  aggiungi un check per quando il giocatore cerca di usare gli oggetti che hanno la boolean "usabile" su false
+        //  {fatto} aggiungi un check per quando il giocatore cerca di usare gli oggetti che hanno la boolean "usabile" su false, o di raccogliere quelli con "raccoglibile" = false
 
 
 
