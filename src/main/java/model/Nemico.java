@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Nemico {
@@ -7,12 +9,16 @@ public class Nemico {
     private int vita;
     private int danno;
     private int possibilitaCritico;
+    private List<Oggetto> lootNemico = new ArrayList<>();
 
     public Nemico(String nome, int vita, int danno, int possibilitaCritico) {
         this.nome = nome;
         this.vita = vita;
         this.danno = danno;
         this.possibilitaCritico = possibilitaCritico;
+    }
+    public Nemico(List<Oggetto> lootNemico){
+        this.lootNemico = lootNemico;
     }
 
     public String getNome() {
@@ -40,5 +46,13 @@ public class Nemico {
 
     public int getDanno() {
         return danno;
+    }
+
+    public List<Oggetto> getLootNemico() {
+        return lootNemico;
+    }
+
+    public void setLootNemico(List<Oggetto> lootNemico) {
+        this.lootNemico = lootNemico;
     }
 }
