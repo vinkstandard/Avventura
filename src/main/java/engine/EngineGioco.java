@@ -1,4 +1,5 @@
 package engine;
+
 import model.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class EngineGioco {
     }
 
     public void avvia() {
+
         Scanner scanner = new Scanner(System.in);
         boolean continua = true;
         List<Stanza> stanzeVisitate = new ArrayList<>();
@@ -89,8 +91,8 @@ public class EngineGioco {
     }
 
     private void vai(String direzione) {
-        Stanza stanzaAttuale = giocatore.getStanzaAttuale();
 
+        Stanza stanzaAttuale = giocatore.getStanzaAttuale();
         if (!stanzaAttuale.esisteUscita(direzione)) {
             System.out.println(">> Non c'è nessuna uscita in quella direzione");
             return;
@@ -108,7 +110,6 @@ public class EngineGioco {
 
         List<Oggetto> oggettiPerTerra = giocatore.getStanzaAttuale().getOggettiPresenti();
         Oggetto oggettoTrovato = null;
-
         for (Oggetto oggettoPerTerra : oggettiPerTerra) {
             if (oggettoPerTerra.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())) {
                 oggettoTrovato = oggettoPerTerra;
@@ -126,10 +127,9 @@ public class EngineGioco {
 
             System.out.println(">> Hai raccolto: " + oggettoTrovato.getNome() + ".");
         } else {
-            if(oggettoTrovato == null){
+            if (oggettoTrovato == null) {
                 System.out.println(">> Oggetto non trovato.");
-            }
-            else if(!oggettoTrovato.isRaccoglibile()){
+            } else if (!oggettoTrovato.isRaccoglibile()) {
                 System.out.println(">> Non puoi raccogliere questo oggetto.");
 
             }
@@ -138,12 +138,12 @@ public class EngineGioco {
     }
 
     private void guarda() {
-        giocatore.getStanzaAttuale().stampaDescrizioneStanza();
 
-        List<Oggetto> oggetti = giocatore.getStanzaAttuale().getOggettiPresenti();
-        if (oggetti != null && !oggetti.isEmpty()) {
+        giocatore.getStanzaAttuale().stampaDescrizioneStanza();
+        List<Oggetto> oggettiPerTerra = giocatore.getStanzaAttuale().getOggettiPresenti();
+        if (oggettiPerTerra != null && !oggettiPerTerra.isEmpty()) {
             System.out.println(">> A terra:");
-            for (Oggetto oggetto : oggetti) {
+            for (Oggetto oggetto : oggettiPerTerra) {
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
         }
@@ -151,8 +151,8 @@ public class EngineGioco {
     }
 
     private String rimuoviOggettoDaTerra(String descrizioneStanza, String nomeOggetto) {
-        StringBuilder risultato = new StringBuilder();
 
+        StringBuilder risultato = new StringBuilder();
         // regex per dividere la descrizioni in blocchi in base ai punti
         String[] frasi = descrizioneStanza.split("(?<=\\.)\\s*");
 
@@ -168,7 +168,7 @@ public class EngineGioco {
 
     private void usa(String nomeOggetto, String direzione) {
 
-        if (giocatore.getInventario().possiedeOggetto(nomeOggetto)) {
+        if (giocatore.getInventario().possiedeOggetto(nomeOggetto) && giocatore.getInventario().getOggetto(nomeOggetto).isUsabile()) {
             boolean sbloccato = giocatore.getStanzaAttuale().sbloccaUscita(direzione, nomeOggetto);
             if (sbloccato) {
                 System.out.println(">> Hai usato l'oggetto {" + nomeOggetto + "} il passaggio si è aperto.");
@@ -182,6 +182,7 @@ public class EngineGioco {
     }
 
     private void combatti() {
+
         Scanner scanner = new Scanner(System.in);
         Nemico nemico = giocatore.getStanzaAttuale().getNemico();
 
@@ -209,8 +210,7 @@ public class EngineGioco {
                 bevi();
             } else if (mossa.startsWith("equipaggia ")) {
                 equipaggia(mossa);
-            }
-            else if (mossa.startsWith("info")) {
+            } else if (mossa.startsWith("info")) {
                 info();
             }
 
@@ -244,7 +244,7 @@ public class EngineGioco {
                 } else {
                     System.out.println(">> Tenti di scappare, ma fallisci, il nemico colpisce ti colpisce due volte.");
                     giocatore.subisciDanno(nemico.attacca());
-                    System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + nemico.attacca() + " danni.");
+                    System.out.println(">> " + nemico.getNome() + " ti ha colpito per " + nemico.attacca() + " danni.\n>> Ti restano: " + giocatore.getVita() + " hp.");
                 }
             }
 
@@ -269,16 +269,11 @@ public class EngineGioco {
     }
 
     public void bevi() {
+
         Scanner scanner = new Scanner(System.in);
-        boolean haOggettiCurativi = false;
-        List<Oggetto> oggettiCurativi = new ArrayList<>();
-        for (Oggetto oggetto : giocatore.getInventario().getOggetti()) {
-            if (oggetto.getEffetto() != null && oggetto.getEffetto().equals("curativo")) { // qui poi metteremo anche i veleni non solo curativo, nel caso in cui il giocatore voglia provare a berli
-                haOggettiCurativi = true;
-                oggettiCurativi.add(oggetto);
-            }
-        }
-        if (!haOggettiCurativi) {
+        List<Oggetto> oggettiCurativi = giocatore.getInventario().getOggettiCurativi();
+
+        if (oggettiCurativi.isEmpty()) {
             System.out.println(">> Non possiedi oggetti da bere.");
             return;
         }
@@ -300,6 +295,7 @@ public class EngineGioco {
     }
 
     private void debug() {
+
         Stanza stanzaAttuale = giocatore.getStanzaAttuale();
         System.out.println("Stanza attuale: " + stanzaAttuale.getNome());
         System.out.println("Descrizione: " + stanzaAttuale.getDescrizione());
@@ -313,6 +309,7 @@ public class EngineGioco {
     }
 
     public void lascia(String comando) {
+
         String nomeOggetto = switch (comando.charAt(0)) {
             case 'l' -> comando.replaceFirst("lascia ", "");
             case 'd' -> comando.replaceFirst("droppa ", "");
@@ -329,8 +326,8 @@ public class EngineGioco {
     }
 
     public void equipaggia(String comando) {
-        String nomeArma = comando.replaceFirst("equipaggia ", "");
 
+        String nomeArma = comando.replaceFirst("equipaggia ", "");
         Oggetto oggetto = giocatore.getInventario().getOggetto(nomeArma);
         if (oggetto instanceof Arma arma) {
             giocatore.equipaggiaArma(arma);
@@ -341,6 +338,7 @@ public class EngineGioco {
     }
 
     public void curaGiocatore(String nome) { // nome fa riferimento a un oggetto curativo, o a una possible abilità
+
         if (nome.equalsIgnoreCase("Pozione Rossa")) {
             giocatore.guadagnaHpGiocatore(40);
             System.out.println(">> Hai usato " + nome + "!");
@@ -350,10 +348,15 @@ public class EngineGioco {
     public void info() {
 
         System.out.println("HP: " + giocatore.getVita());
-        System.out.println("Arma equipaggiata: " + giocatore.getArmaEquipaggiata().getNome() + "\tDMG: " + giocatore.getArmaEquipaggiata().getDanno() + "\t CRT: " + giocatore.getArmaEquipaggiata().getPossibilitaCritico() + "%");
+        if(giocatore.getArmaEquipaggiata() != null){
+            System.out.println("Arma equipaggiata: " + giocatore.getArmaEquipaggiata().getNome() + "\tDMG: " + giocatore.getArmaEquipaggiata().getDanno() + "\t CRT: " + giocatore.getArmaEquipaggiata().getPossibilitaCritico() + "%");
+        }else{
+            System.out.println("Arma equipaggiata: Nessuna.");
+        }
     }
 
     public void help() {
+
         System.out.println("Comandi validi:");
         System.out.println("""
                 -Movimento--------------------------------------------------------------------
@@ -370,7 +373,8 @@ public class EngineGioco {
                 "info": Mostra hp giocatore ed equipaggiamento.
                 "guarda": Ti guardi attorno e controlli se ci sono oggetti.
                 "inventario": Visualizzi il tuo inventario.
-                "usa [nomeOggetto] + direzione": Usi un oggetto in una direzione. Es: usa spranga nord
+                "usa [nomeOggetto] + direzione": Usi un oggetto in una direzione. Es: usa mazza sud
+                "bevi": Bevi un oggetto curativo.
                 "esci": Esci dal gioco""");
 
     }
@@ -380,7 +384,7 @@ public class EngineGioco {
         // qui scriverò tutti i messaggi di errore personalizzati
 
         if (comando.equals("per ora non so cosa mettere")) {
-
+            // per ora niente
         } else {
             System.out.println(">> Comando non valido.");
         }
