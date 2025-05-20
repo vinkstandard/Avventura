@@ -19,8 +19,13 @@ public class Giocatore {
         this.vita -= danno;
         if(this.vita < 0) this.vita = 0;
     }
-    public void guadagnaHpGiocatore(int hp){
-        this.vita += hp;
+
+    public void guadagnaHpGiocatore(int hp) {
+        if (this.vita + hp > 100) { // per non superare il cap dei 100 hp
+            this.vita = 100;
+        } else {
+            this.vita += hp;
+        }
     }
     public int getDannoBase(){
         return dannoBase;
