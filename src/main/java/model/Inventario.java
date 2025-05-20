@@ -52,5 +52,14 @@ public class Inventario {
         }
         return false;
     }
+    public List<Oggetto> getOggettiCurativi(){
+        List<Oggetto> oggettiCurativi = new ArrayList<>();
+        for(Oggetto oggettoInventario : oggetti){
+            if(oggettoInventario.getEffetto() != null && oggettoInventario.getEffetto().equals("curativo")){
+                oggettiCurativi.add(oggettoInventario);
+            }
+        }
+        return oggettiCurativi;
+    }
 
 }
