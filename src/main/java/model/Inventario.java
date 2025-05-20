@@ -19,10 +19,8 @@ public class Inventario {
     }
 
     public Oggetto getOggetto(String nomeOggetto) {
-//        return oggetti.stream()
-//                .filter(i -> i.getNome().equalsIgnoreCase(nomeOggetto)).findFirst().orElse(null);
-        for(Oggetto oggettoInventario : oggetti){
-            if(oggettoInventario.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())) {
+        for (Oggetto oggettoInventario : oggetti) {
+            if (oggettoInventario.getNome().toLowerCase().contains(nomeOggetto.toLowerCase())) {
                 return oggettoInventario;
             }
         }
@@ -52,10 +50,11 @@ public class Inventario {
         }
         return false;
     }
-    public List<Oggetto> getOggettiCurativi(){
+
+    public List<Oggetto> getOggettiCurativi() {
         List<Oggetto> oggettiCurativi = new ArrayList<>();
-        for(Oggetto oggettoInventario : oggetti){
-            if(oggettoInventario.getEffetto() != null && oggettoInventario.getEffetto().equals("curativo")){
+        for (Oggetto oggettoInventario : oggetti) {
+            if (oggettoInventario.getEffetto() != null && oggettoInventario.getEffetto().equals("curativo")) {
                 oggettiCurativi.add(oggettoInventario);
             }
         }
