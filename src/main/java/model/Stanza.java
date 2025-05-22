@@ -99,4 +99,7 @@ public class Stanza {
         return condizioniSblocco;
     }
 
+    public boolean contieneNemico(){
+        return nemico != null;
+    }
 }
