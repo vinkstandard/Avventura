@@ -55,4 +55,8 @@ public class Nemico {
     public void setLootNemico(List<Oggetto> lootNemico) {
         this.lootNemico = lootNemico;
     }
+    public void rimuoviLootNemico(Oggetto oggettoDaRimuovere){
+        lootNemico.remove(oggettoDaRimuovere);
+    }
+
 }
