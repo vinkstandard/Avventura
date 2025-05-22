@@ -17,10 +17,12 @@ public class Arma extends Oggetto {
     public int infliggiDanno() {
 
         int random = ThreadLocalRandom.current().nextInt(0, 101); // calcolo percentuale per il crit
+
         if (random <= possibilitaCritico) { // se abbiamo crittato
+            // genera un numero da 1 al danno dell'arma (non inclusivo, per questo aggiungiamo +1), se la critchance procca allora raddoppiamo
             return ThreadLocalRandom.current().nextInt(1, danno + 1) * 2; // raddoppio in caso di critico
         } else {
-            return ThreadLocalRandom.current().nextInt(1, danno + 1); // genera un numero casuale da 1, al danno attuale dell'arma
+            return ThreadLocalRandom.current().nextInt(1, danno + 1);
         }
     }
 
