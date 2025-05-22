@@ -3,6 +3,7 @@ package engine;
 import model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -82,6 +83,25 @@ public class EngineGioco {
                 info();
             } else if (comando.equals("help")) {
                 help();
+            } else if (comando.startsWith("depreda ") || comando.equals("loot")) {
+
+                Nemico nemico = giocatore.getStanzaAttuale().getNemico();
+                if (!giocatore.getStanzaAttuale().contieneNemico() || nemico.getLootNemico().isEmpty()) {
+                    System.out.println(">> Non c'è nessun nemico da depredare qui.");
+                } else if (comando.startsWith("l")) {
+                    if (giocatore.getStanzaAttuale().getNemico().getLootNemico().isEmpty()) {
+                        System.out.println(">> Il nemico non possedeva niente di utile con se.");
+                    } else {
+                        depredaCadavere();
+                    }
+                } else if (comando.startsWith("d")) {
+                    String bersaglio = comando.replaceFirst("depreda ", "");
+                    if (!nemico.getNome().toLowerCase().equals(bersaglio)) {
+                        System.out.println(">> Non c'è il nemico {" + bersaglio + "} quì.");
+                    } else {
+                        depredaCadavere();
+                    }
+                }
             } else {
                 gestisciInputErrati(comando);
             }
@@ -146,6 +166,14 @@ public class EngineGioco {
                 System.out.println("- " + oggetto.getNome() + ": " + oggetto.getDescrizione());
             }
         }
+        if(giocatore.getStanzaAttuale().getNemico() != null){
+            Nemico nemico = giocatore.getStanzaAttuale().getNemico();
+            if(!nemico.isVivo() && oggettiPerTerra != null && oggettiPerTerra.isEmpty()){
+                System.out.println(">> A terra:\n- Cadavere di " + nemico.getNome());
+            }else{
+                System.out.println("- Cadavere di " + nemico.getNome());
+            }
+        }
 
     }
 
@@ -195,11 +223,13 @@ public class EngineGioco {
     }
 
     private void combatti() {
+        // testing, per ora non stiamo rimuovendo i nemici dalla stanza dopo averli sconfitti, per dare il prompt al giocatore di lootarli, se dovesse
+        // servire, il comando per rimuoverli è questo: giocatore.getStanzaAttuale().setNemico(null);
 
         Scanner scanner = new Scanner(System.in);
         Nemico nemico = giocatore.getStanzaAttuale().getNemico();
 
-        if (nemico == null) {
+        if (nemico == null || nemico.getVita() <= 0) {
             System.out.println(">> Non c'è nessuno da combattere qui.");
             return;
         }
@@ -208,14 +238,15 @@ public class EngineGioco {
         System.out.println(">> Mosse disponibili: \n-Attacca\n-Equipaggia {arma}\n-Curati\n-Scappa");
 
         while (nemico.isVivo()) {
-
+            List<String> mosseDisponibili = new ArrayList<>(
+                    Arrays.asList("attacca", "equipaggia", "curati", "info", "scappa", "oneshot"));
             String mossa;
             do {
                 mossa = scanner.nextLine().toLowerCase();
-                if (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati") && !mossa.equals("info")) {
+                if (!mosseDisponibili.contains(mossa)) {
                     System.out.println(">> Comando non valido.");
                 }
-            } while (!mossa.equals("attacca") && !mossa.equals("scappa") && !mossa.startsWith("equipaggia ") && !mossa.equals("curati") && !mossa.equals("info"));
+            } while (!mosseDisponibili.contains(mossa));
 
             // turno del giocatore, calcolando anche la possibilità di critico
 
@@ -225,6 +256,12 @@ public class EngineGioco {
                 equipaggia(mossa);
             } else if (mossa.startsWith("info")) {
                 info();
+            } else if (mossa.equals("oneshot")){
+                nemico.subisciDanno(nemico.getVita());
+                if (!nemico.isVivo()) {
+                    System.out.println(">> Hai sconfitto " + nemico.getNome() + "!");
+                    break;
+                }
             }
 
 
@@ -245,7 +282,6 @@ public class EngineGioco {
             }
             if (!nemico.isVivo()) {
                 System.out.println(">> Hai sconfitto " + nemico.getNome() + "!");
-                giocatore.getStanzaAttuale().setNemico(null); // rimuoviamo il nemico dalla stanza
                 break;
             }
             if (mossa.equals("scappa")) {
@@ -349,6 +385,23 @@ public class EngineGioco {
             System.out.println(">> Non puoi usarlo come arma.");
         }
     }
+    public void depredaCadavere(){
+
+        Scanner scanner = new Scanner(System.in);
+        Nemico nemico = giocatore.getStanzaAttuale().getNemico();
+        int indiceOggetto = 1;
+        List<Oggetto> lootNemico = nemico.getLootNemico();
+        List<Oggetto> daRimuovere = new ArrayList<>();
+        System.out.println(">> Frugando tra i resti del nemico hai trovato:");
+        for(Oggetto oggetto : lootNemico){
+            System.out.println(indiceOggetto + ". " + oggetto.getNome() + ": " + oggetto.getDescrizione());
+            giocatore.getInventario().aggiungiOggetto(oggetto);
+            daRimuovere.add(oggetto);
+        }
+        for(Oggetto oggetto : daRimuovere){
+            nemico.rimuoviLootNemico(oggetto);
+        }
+    }
 
     public void curaGiocatore(String nome) { // nome fa riferimento a un oggetto curativo, o a una possible abilità
 
@@ -388,6 +441,7 @@ public class EngineGioco {
                 "inventario": Visualizzi il tuo inventario.
                 "usa [nomeOggetto] + direzione": Usi un oggetto in una direzione. Es: usa mazza sud
                 "bevi": Bevi un oggetto curativo.
+                "depreda [nome]" / "loot": Depredi un cadavere di un nemico sconfitto.
                 "esci": Esci dal gioco""");
 
     }
