@@ -35,9 +35,9 @@ public class Nemico {
     public int attacca(){
         int random = ThreadLocalRandom.current().nextInt(0, 101); // calcolo percentuale
         if(random <= possibilitaCritico){ // se abbiamo crittato
-            return danno * 2;
+            return ThreadLocalRandom.current().nextInt(1, danno + 1) * 2;
         }else{
-            return danno;
+            return ThreadLocalRandom.current().nextInt(1, danno + 1);
         }
     }
     public boolean isVivo(){
