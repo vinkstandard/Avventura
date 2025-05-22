@@ -5,8 +5,7 @@ import model.Nemico;
 import model.Stanza;
 import model.Oggetto;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Mappa {
     private Map<String, Stanza> stanze;
@@ -79,7 +78,6 @@ public class Mappa {
 
 //        cucina villa
 
-        cucinaVilla.aggiungiOggetto(new Oggetto("Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere.", true,true, "curativo"));
         cucinaVilla.aggiungiOggetto(new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20));
         cucinaVilla.aggiungiUscita("sud", ovestVilla, false, null);
         cucinaVilla.aggiungiUscita("est", atrioVilla, false, null);
@@ -93,6 +91,10 @@ public class Mappa {
         Nemico goblin = new Nemico("Goblin", 40, 7, 5);
         atrioVilla.setNemico(goblin);
         atrioVilla.aggiungiUscita("ovest", cucinaVilla, false, null);
+        goblin.setLootNemico(new ArrayList<>(List.of(
+                new Oggetto("Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere", true, true, "curativo")
+        )));
+
 
         stanzaIniziale = cucinaVilla;
     }
