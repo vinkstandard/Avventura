@@ -66,8 +66,7 @@ public class EngineGioco {
                 giocatore.getInventario().visualizzaInventario();
 
             } else if (comando.startsWith("usa ")) {
-                String[] boxati = comando.replaceFirst("usa ", "").split(" ");
-                usa(boxati[0].toLowerCase(), boxati[1].toLowerCase());
+                usa(comando.replaceFirst("usa " , ""));
 
             } else if (comando.equals("debug")) {
                 debug();
@@ -166,9 +165,23 @@ public class EngineGioco {
         return risultato.toString().trim();
     }
 
-    private void usa(String nomeOggetto, String direzione) {
+    private void usa(String comando) {
+        String[] comandi = comando.split(" ", 2); // limite 2,
 
-        if (giocatore.getInventario().possiedeOggetto(nomeOggetto) && giocatore.getInventario().getOggetto(nomeOggetto).isUsabile()) {
+        if(comandi.length < 2 || comandi[1].isEmpty()){
+            System.out.println(">> Specifica la direzione.");
+            return;
+        }
+        String nomeOggetto = comandi[0];
+        String direzione = comandi[1];
+
+        Oggetto oggetto = giocatore.getInventario().getOggetto(nomeOggetto);
+        if (giocatore.getInventario().possiedeOggetto(nomeOggetto)) {
+            // check per vedere se è un arma
+            if (oggetto instanceof Arma) {
+                System.out.println(">> Non puoi usare un'arma come oggetto. Le armi si usano solo in combattimento.");
+                return;
+            }
             boolean sbloccato = giocatore.getStanzaAttuale().sbloccaUscita(direzione, nomeOggetto);
             if (sbloccato) {
                 System.out.println(">> Hai usato l'oggetto {" + nomeOggetto + "} il passaggio si è aperto.");
