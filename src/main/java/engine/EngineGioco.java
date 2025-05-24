@@ -238,15 +238,15 @@ public class EngineGioco {
         System.out.println(">> Mosse disponibili: \n-Attacca\n-Equipaggia {arma}\n-Curati\n-Scappa");
 
         while (nemico.isVivo()) {
-            List<String> mosseDisponibili = new ArrayList<>(
-                    Arrays.asList("attacca", "equipaggia", "curati", "info", "scappa", "oneshot"));
+            List<String> mosseDisponibili = new ArrayList<>(Arrays.asList("attacca", "curati", "info", "scappa", "oneshot"));
             String mossa;
             do {
-                mossa = scanner.nextLine().toLowerCase();
-                if (!mosseDisponibili.contains(mossa)) {
-                    System.out.println(">> Comando non valido.");
-                }
-            } while (!mosseDisponibili.contains(mossa));
+                mossa = scanner.nextLine().toLowerCase().trim();
+               boolean comandoValido = mosseDisponibili.contains(mossa) || mossa.startsWith("equipaggia ");
+               if(!comandoValido){
+                   System.out.println(">> Comando non valido. \t(\"" + mossa + "\")");
+               }
+            } while (!mosseDisponibili.contains(mossa) && !mossa.startsWith("equipaggia "));
 
             // turno del giocatore, calcolando anche la possibilità di critico
 
