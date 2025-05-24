@@ -22,7 +22,7 @@ public class Mappa {
 
         Stanza sterpaglie = new Stanza("Sterpaglie", "Sei in una fitta foresta che si estende in tutte le direzioni. Vedi delle luci verso nord.");
 
-        Stanza cancelloArrugginito = new Stanza("Cancello arrugginito", "Sei davanti a un cancello arrugginito, " +
+        Stanza cancelloArrugginito = new Stanza("Cancello arrugginito", "Sei davanti a un cancello arrugginito chiuso, " +
                 "oltre il cancello riesci a scrutare una strada sterrata che conduce ad un grande edificio. Ai tuoi piedi c'è una spranga di metallo.");
 
         Stanza stradaSterrata = new Stanza("Strada sterrata", "Sei su una strada sterrata, a nord la strada conduce ad una villa gotica, " +
@@ -53,8 +53,8 @@ public class Mappa {
 //        cancello arrugginito
         cancelloArrugginito.aggiungiUscita("sud", sterpaglie, false, null);
         cancelloArrugginito.aggiungiUscita("nord", stradaSterrata, true, "spranga");
-        Oggetto spranga = new Oggetto("Spranga arrugginita", "Una Spranga di metallo arrugginita", true, true, null);
-        cancelloArrugginito.aggiungiOggetto(spranga);
+        cancelloArrugginito.aggiungiOggetto(new Oggetto(
+                "Spranga arrugginita", "Una Spranga di metallo arrugginita", true, true, null));
 
 //        strada sterrata
         stradaSterrata.aggiungiUscita("est", capannoAttrezzi, false, null);
@@ -63,10 +63,12 @@ public class Mappa {
 
 //        capanno attrezzi
         capannoAttrezzi.aggiungiUscita("ovest", stradaSterrata, false, null);
-        capannoAttrezzi.aggiungiOggetto(new Oggetto("Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null));
+        capannoAttrezzi.aggiungiOggetto(new Oggetto(
+                "Lanterna", "Vecchia lanterna a olio, scuotendola senti che il serbatoio è pieno a metà.", true, true, null));
 
 //        fronte villa
-        Oggetto sfera = new Oggetto("Sfera", "Una sfera in vetro decorato.", true, true, null);
+        Oggetto sfera = new Oggetto(
+                "Sfera", "Una sfera in vetro decorato.", true, true, null);
         fronteVilla.aggiungiUscita("sud", stradaSterrata, false, null);
         fronteVilla.aggiungiUscita("ovest", ovestVilla, false, null);
         fronteVilla.aggiungiUscita("nord", atrioVilla, true, "sfera");
@@ -78,7 +80,8 @@ public class Mappa {
 
 //        cucina villa
 
-        cucinaVilla.aggiungiOggetto(new Arma("Coltello", "Un coltello da cucina ben affilato", 8, 20));
+        cucinaVilla.aggiungiOggetto(new Arma(
+                "Coltello", "Un coltello da cucina ben affilato", 8, 20));
         cucinaVilla.aggiungiUscita("sud", ovestVilla, false, null);
         cucinaVilla.aggiungiUscita("est", atrioVilla, false, null);
         cucinaVilla.aggiungiUscita("nord", salaDaPranzoVilla, false, null);
@@ -91,12 +94,12 @@ public class Mappa {
         Nemico goblin = new Nemico("Goblin", 40, 7, 5);
         atrioVilla.setNemico(goblin);
         atrioVilla.aggiungiUscita("ovest", cucinaVilla, false, null);
-        goblin.setLootNemico(new ArrayList<>(List.of(
-                new Oggetto("Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere", true, true, "curativo")
+        goblin.setLootNemico(new ArrayList<>(List.of(new Oggetto(
+                "Pozione rossa", "Un'ampolla contenente un liquido rosso, dovrebbe essere sicuro da bere", true, true, "curativo")
         )));
 
 
-        stanzaIniziale = cucinaVilla;
+        stanzaIniziale = cancelloArrugginito;
     }
 
     public Stanza getStanzaIniziale() {
